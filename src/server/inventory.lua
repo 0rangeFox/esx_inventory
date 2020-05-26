@@ -231,7 +231,7 @@ AddEventHandler("esx_inventory:TopoffStack", function(data)
             --player.removeMoney(data.originItem.price * data.originQty)
             local deletemoney = data.originItem.price * data.originQty
             player.removeInventoryItem("cash", deletemoney)
-            
+
         else
             TriggerClientEvent('esx_inventory:refreshInventory', source)
             TriggerClientEvent('esx_inventory:refreshInventory', data.target)
@@ -287,9 +287,9 @@ AddEventHandler("esx_inventory:EmptySplitStack", function(data)
     if data.originTier.name == 'shop' then
         local player = ESX.GetPlayerFromIdentifier(data.destinationOwner)
         if player.getMoney() >= data.originItem.price * data.moveQty then
-           --player.removeMoney(data.originItem.price * data.moveQty)
-           local deletemoney = data.originItem.price * data.moveQty
-           player.removeInventoryItem("cash", deletemoney)
+            --player.removeMoney(data.originItem.price * data.moveQty)
+            local deletemoney = data.originItem.price * data.moveQty
+            player.removeInventoryItem("cash", deletemoney)
         else
             TriggerClientEvent('esx_inventory:refreshInventory', source)
             TriggerClientEvent('esx_inventory:refreshInventory', data.target)
@@ -313,7 +313,7 @@ AddEventHandler("esx_inventory:EmptySplitStack", function(data)
             inventory[tostring(data.destinationSlot)] = {
                 name = item.name,
                 count = data.moveQty
-            }        
+            }
             TriggerEvent('esx_inventory:refreshInventory', data.originOwner)
         end)
     else
@@ -327,7 +327,7 @@ AddEventHandler("esx_inventory:EmptySplitStack", function(data)
                     name = item.name,
                     count = data.moveQty
                 }
-                
+
                 if data.originTier.name == 'player' then
                     local originPlayer = ESX.GetPlayerFromIdentifier(data.originOwner)
                     data.originItem.block = true
@@ -444,9 +444,9 @@ function removeItemFromInventory(item, count, inventory)
 end
 
 function addToInventory(item, type, inventory)
-    local max = getItemsInfo(item.name, 'limit') or 9999999999
+    local max = getItemsInfo(item.name, 'limit') or 2147483647
     if max == -1 then
-        max = 9999999999
+        max = 2147483647
     end
     local toAdd = item.count
     toAdd = AttemptMerge(item, inventory, toAdd)
@@ -460,9 +460,9 @@ function addToInventory(item, type, inventory)
 end
 
 function AttemptMerge(item, inventory, count)
-    local max = getItemsInfo(item.name, 'limit') or 9999999999
+    local max = getItemsInfo(item.name, 'limit') or 2147483647
     if max == -1 then
-        max = 9999999999
+        max = 2147483647
     end
     for k, v in pairs(inventory) do
         if v.name == item.name then
@@ -482,9 +482,9 @@ function AttemptMerge(item, inventory, count)
 end
 
 function AddToEmpty(item, type, inventory, count)
-    local max = getItemsInfo(item.name, 'limit') or 9999999999
+    local max = getItemsInfo(item.name, 'limit') or 2147483647
     if max == -1 then
-        max = 9999999999
+        max = 2147483647
     end
     for i = 1, InvType[type].slots, 1 do
         if inventory[tostring(i)] == nil then
@@ -505,9 +505,9 @@ function AddToEmpty(item, type, inventory, count)
 end
 
 function createDisplayItem(item, esxItem, slot, price, type)
-    local max = getItemsInfo(item.name, 'limit') or 9999999999
+    local max = getItemsInfo(item.name, 'limit') or 2147483647
     if max == -1 then
-        max = 9999999999
+        max = 2147483647
     end
     return {
         id = esxItem.name,
