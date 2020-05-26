@@ -1,0 +1,9 @@
+var invLocale = new Object();
+invLocale.dropItem = "Ödeme Yap";
+invLocale.useItem = "Kullan";
+invLocale.giveItem = "Ver";
+invLocale.label = "Envanter Başlığı";
+invLocale.stealmoney = "Para Çal";
+invLocale.seizemoney = "Para Al";
+invLocale.takemoney = "Almak";
+invLocale.storemoney = "Koy";

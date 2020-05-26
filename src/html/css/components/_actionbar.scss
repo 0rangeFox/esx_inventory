@@ -1,0 +1,79 @@
+#action-bar {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+    overflow: hidden;
+    z-index: 999;
+
+    .slot {
+        max-width: 120px;
+        display: inline-block;
+        background-color: $slot;
+        margin: 3px;
+        position: relative;
+        border: 1px solid $border;
+        transition: background-color ease-in 0.15s;
+
+        &.used {
+            background-color: $slot-dragging;
+        }
+
+        &.empty-used {
+            background-color: $slot-error;
+        }
+
+        .item {
+            width: 100%;
+            min-width: 110px;
+            height: 120px;
+            background-size: 70%;
+            background-repeat: no-repeat;
+            background-position: center center;
+    
+            .item-keybind {
+                position: absolute;
+                text-align: center;
+                font-size: 15px;
+                line-height: 0px;
+                color: $hotkey-text;
+                width: fit-content;
+                top: 0;
+                z-index: 999;
+                background: $hotkey-background;
+                padding: 10px;
+                border-right: 1px solid $border;
+                border-bottom: 1px solid $border;
+            }
+            
+            .item-name {
+                position: absolute;
+                bottom: 0;
+                text-align: center;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                width: 100%;
+                min-height: 30px;
+                z-index: 500;
+                font-size: 12px;
+                background-color: $item-name-background;
+                border-top: 1px solid $border;
+                color: $item-name-text;
+                font-weight: 200;
+            }
+            
+            .item-count {
+                position: absolute;
+                top: 0;
+                text-align: right;
+                right: 5px;
+                height: 20px;
+                z-index: 500;
+            }
+        }
+    }
+}
