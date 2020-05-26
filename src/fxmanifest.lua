@@ -80,5 +80,6 @@ files {
 }
 
 dependencies {
-    'es_extended'
+    'es_extended',
+    'disc-base'
 }
