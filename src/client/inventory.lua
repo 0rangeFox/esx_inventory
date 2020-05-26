@@ -57,18 +57,18 @@ end)
 
 function refreshPlayerInventory()
     ESX.TriggerServerCallback('esx_inventory:getPlayerInventory', function(data)
-        SendNUIMessage(
-                { action = "setItems",
-                  itemList = data.inventory,
-                  invOwner = data.invId,
-                  invTier = data.invTier,
-                  money = {
-                      cash = data.cash,
-                      bank = data.bank,
-                      black_money = data.black_money
-                  }
-                }
-        )
+        SendNUIMessage({
+            action = "setItems",
+            itemList = data.inventory,
+            invOwner = data.invId,
+            invTier = data.invTier,
+            money = {
+                cash = data.cash,
+                bank = data.bank,
+                black_money = data.black_money
+            }
+        })
+
         TriggerServerEvent('esx_inventory:openInventory', {
             type = 'player',
             owner = ESX.GetPlayerData().identifier
@@ -80,32 +80,28 @@ function refreshSecondaryInventory()
     ESX.TriggerServerCallback('esx_inventory:canOpenInventory', function(canOpen)
         if canOpen or secondInventory.type == 'shop' then
             ESX.TriggerServerCallback('esx_inventory:getSecondaryInventory', function(data)
-                SendNUIMessage(
-                        { action = "setSecondInventoryItems",
-                          itemList = data.inventory,
-                          invOwner = data.invId,
-                          invTier = data.invTier,
-                          money = {
-                              cash = data.cash,
-                              black_money = data.black_money
-                          }
-                        }
-                )
-                SendNUIMessage(
-                        {
-                            action = "show",
-                            type = 'secondary'
-                        }
-                )
+                SendNUIMessage({
+                    action = "setSecondInventoryItems",
+                    itemList = data.inventory,
+                    invOwner = data.invId,
+                    invTier = data.invTier,
+                    money = {
+                        cash = data.cash,
+                        black_money = data.black_money
+                    }
+                })
+
+                SendNUIMessage({
+                    action = "show",
+                    type = 'secondary'
+                })
                 TriggerServerEvent('esx_inventory:openInventory', secondInventory)
             end, secondInventory.type, secondInventory.owner)
         else
-            SendNUIMessage(
-                    {
-                        action = "hide",
-                        type = 'secondary'
-                    }
-            )
+            SendNUIMessage({
+                action = "hide",
+                type = 'secondary'
+            })
         end
     end, secondInventory.type, secondInventory.owner)
 end

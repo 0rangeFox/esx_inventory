@@ -231,7 +231,7 @@ AddEventHandler("esx_inventory:TopoffStack", function(data)
             --player.removeMoney(data.originItem.price * data.originQty)
             local deletemoney = data.originItem.price * data.originQty
             player.removeInventoryItem("cash", deletemoney)
-
+            
         else
             TriggerClientEvent('esx_inventory:refreshInventory', source)
             TriggerClientEvent('esx_inventory:refreshInventory', data.target)
@@ -287,9 +287,9 @@ AddEventHandler("esx_inventory:EmptySplitStack", function(data)
     if data.originTier.name == 'shop' then
         local player = ESX.GetPlayerFromIdentifier(data.destinationOwner)
         if player.getMoney() >= data.originItem.price * data.moveQty then
-            --player.removeMoney(data.originItem.price * data.moveQty)
-            local deletemoney = data.originItem.price * data.moveQty
-            player.removeInventoryItem("cash", deletemoney)
+           --player.removeMoney(data.originItem.price * data.moveQty)
+           local deletemoney = data.originItem.price * data.moveQty
+           player.removeInventoryItem("cash", deletemoney)
         else
             TriggerClientEvent('esx_inventory:refreshInventory', source)
             TriggerClientEvent('esx_inventory:refreshInventory', data.target)
@@ -313,7 +313,7 @@ AddEventHandler("esx_inventory:EmptySplitStack", function(data)
             inventory[tostring(data.destinationSlot)] = {
                 name = item.name,
                 count = data.moveQty
-            }
+            }        
             TriggerEvent('esx_inventory:refreshInventory', data.originOwner)
         end)
     else
@@ -327,7 +327,7 @@ AddEventHandler("esx_inventory:EmptySplitStack", function(data)
                     name = item.name,
                     count = data.moveQty
                 }
-
+                
                 if data.originTier.name == 'player' then
                     local originPlayer = ESX.GetPlayerFromIdentifier(data.originOwner)
                     data.originItem.block = true

@@ -22,10 +22,12 @@ end)
 function getShopInventory(identifier, cb)
     local shop = Config.Shops[identifier]
     local items = {}
+
     for k, v in pairs(shop.items) do
         v.usable = false
         items[tostring(k)] = v
     end
+
     cb(items)
 end
 
