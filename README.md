@@ -1,6 +1,6 @@
 # esx_inventory | Only works with this [es_extended](https://github.com/0rangeFox/es_extended)
 
-### I will accept PR or do bug fixes, if you found one, [just report it on section "issues"](https://github.com/0rangeFox/es_extended/issues). You can contact me through discord: Mr John#4117
+### I will accept PR or do bug fixes, if you found one, [just report it on section "issues"](https://github.com/0rangeFox/es_extended/issues). You can [join on my support discord](https://discord.gg/5vrjddj) to get help.
 
 # Description
 Adds the following features
@@ -29,7 +29,7 @@ Adds the following features
 Weapons are read from the `items` table with the prefix `WEAPON_`. Add all usable weapons into the `items` table with their limit.
 Ammo for each weapon is stored in `ammos` table however I do not support addition of ammo yet.
 
-## Hot Keys
+## Hotbar Keys
 The weapon wheel is disabled for the use of hot keys. Weapons being used as items is needed in this case
 
 # Installation
