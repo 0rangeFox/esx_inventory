@@ -59,7 +59,7 @@ Citizen.CreateThread(function()
         if IsPedShooting(player) then
             for k, v in pairs(Config.Throwables) do
                 if k == currentWeapon then
-                    ESX.TriggerServerCallback('disc-base:takePlayerItem', function(removed)
+                    ESX.TriggerServerCallback('esx_inventory:takePlayerItem', function(removed)
                         if removed then
                             TriggerEvent('esx_inventory:removeCurrentWeapon')
                         end

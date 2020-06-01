@@ -3,9 +3,12 @@ RegisterNUICallback('UseItem', function(data)
     if isWeapon(data.item.id) then
         currentWeaponSlot = data.slot
     end
+
     TriggerServerEvent('esx_inventory:notifyImpendingRemoval', data.item, 1)
-    TriggerServerEvent("esx:useItem", data.item.id)
+    TriggerServerEvent('esx:useItem', data.item.id)
+
     TriggerEvent('esx_inventory:refreshInventory')
+
     data.item.msg = _U('used')
     data.item.qty = 1
     TriggerEvent('esx_inventory:showItemUse', {
@@ -47,7 +50,7 @@ function UseItem(slot)
     end
     Citizen.CreateThread(function()
         isHotKeyCoolDown = true
-        Citizen.Wait(Config.HotKeyCooldown)
+        Citizen.Wait(Config.HotbarKeyCooldown)
         isHotKeyCoolDown = false
     end)
     ESX.TriggerServerCallback('esx_inventory:UseItemFromSlot', function(item)
@@ -56,7 +59,7 @@ function UseItem(slot)
                 currentWeaponSlot = slot
             end
             TriggerServerEvent('esx_inventory:notifyImpendingRemoval', item, 1)
-            TriggerServerEvent("esx:useItem", item.id)
+            TriggerServerEvent('esx:useItem', item.id)
             item.msg = _U('used')
             item.qty = 1
             TriggerEvent('esx_inventory:showItemUse', {

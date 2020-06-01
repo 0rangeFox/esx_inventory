@@ -3,6 +3,6 @@ Citizen.CreateThread(function()
         name = 'glovebox',
         label = _U('glove'),
         slots = 15,
-        maxweight = Config.GloveboxMaxWeight
+        maxWeight = Config.GloveboxMaxWeight
     })
 end)

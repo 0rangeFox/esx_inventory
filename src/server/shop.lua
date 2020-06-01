@@ -3,7 +3,7 @@ Citizen.CreateThread(function()
         name = 'shop',
         label = _U('shop'),
         slots = 50,
-        maxweight = 100000,
+        maxWeight = 100000,
         getInventory = function(identifier, cb)
             getShopInventory(identifier, cb)
         end,
@@ -47,7 +47,7 @@ function getShopDisplayInventory(identifier, cb, source)
             end
             
             if Config.CheckLicense and v.license ~= nil then
-                -- { name = "ammos_pistol", price = 100, count = 1, license = "weaponlicenseone" },
+                -- { name = 'ammos_pistol', price = 100, count = 1, license = 'weaponlicenseone' },
                 if player.getInventoryItem(v.license).count <= 0 then
                     addItem = false
                 end

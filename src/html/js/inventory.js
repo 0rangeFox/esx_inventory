@@ -1,90 +1,83 @@
-var type = "normal";
-var firstTier = 1;
-var firstUsed = 0;
-var firstItems = [];
-var secondTier = 1;
-var secondUsed = 0;
-var secondItems = [];
-var errorHighlightTimer = null;
-var originOwner = false;
-var destinationOwner = false;
-var locked = false;
+let type = "normal";
+let firstTier = 1;
+let firstUsed = 0;
+const firstItems = [];
+let secondTier = 1;
+let secondUsed = 0;
+const secondItems = [];
+let errorHighlightTimer = null;
+let originOwner = false;
+let destinationOwner = false;
+let locked = false;
 
-var playerweight = 0;
-var secondweight = 0;
-var playermoney = 0;
+let playerWeight = 0;
+let secondWeight = 0;
+let playerMoney = 0;
 
-var dragging = false;
-var origDrag = null;
-var draggingItem = null;
-var givingItem = null;
-var mousedown = false;
-var docWidth = document.documentElement.clientWidth;
-var docHeight = document.documentElement.clientHeight;
-var offset = [155, 125];
-var cursorX = docWidth / 2;
-var cursorY = docHeight / 2;
+let dragging = false;
+let origDrag = null;
+let draggingItem = null;
+const givingItem = null;
+const mousedown = false;
+const docWidth = document.documentElement.clientWidth;
+const docHeight = document.documentElement.clientHeight;
+const offset = [155, 125];
+let cursorX = docWidth / 2;
+let cursorY = docHeight / 2;
 
-var successAudio = document.createElement('audio');
+const successAudio = document.createElement('audio');
 successAudio.controls = false;
 successAudio.volume = 0.25;
 successAudio.src = './success.wav';
 
-var failAudio = document.createElement('audio');
+const failAudio = document.createElement('audio');
 failAudio.controls = false;
 failAudio.volume = 0.1;
 failAudio.src = './fail2.wav';
 
 window.addEventListener("message", function(event) {
-    if (event.data.action == "display") {
+    if (event.data.action === "display") {
         type = event.data.type;
 
-        if (type === "normal") {
+        if (type === "normal")
             $('#inventoryTwo').parent().hide();
-        } else if (type === "secondary") {
+        else if (type === "secondary")
             $('#inventoryTwo').parent().show();
-        }
 
         $(".ui").fadeIn();
-    } else if (event.data.action == "hide") {
-        if (event.data.type == 'secondary') {
+    } else if (event.data.action === "hide") {
+        if (event.data.type === 'secondary')
             $('#inventoryTwo').parent().hide();
-        } else {
+        else {
             $("#dialog").dialog("close");
             $(".ui").fadeOut();
         }
-    } else if (event.data.action == "setItems") {
+    } else if (event.data.action === "setItems") {
         firstTier = event.data.invTier;
         originOwner = event.data.invOwner;
         inventorySetup(event.data.invOwner, event.data.itemList, event.data.money, event.data.invTier);
 
-        if ($('#search').val() !== '') {
+        if ($('#search').val() !== '')
             SearchInventory($('#search').val());
-        }
-
-    } else if (event.data.action == "setSecondInventoryItems") {
+    } else if (event.data.action === "setSecondInventoryItems") {
         secondTier = event.data.invTier;
         destinationOwner = event.data.invOwner;
         secondInventorySetup(event.data.invOwner, event.data.itemList, event.data.invTier, event.data.money);
 
-        if ($('#search').val() !== '') {
+        if ($('#search').val() !== '')
             SearchInventory($('#search').val());
-        }
-
-    } else if (event.data.action == "setInfoText") {
+    } else if (event.data.action === "setInfoText")
         $(".info-div").html(event.data.text);
-    } else if (event.data.action == 'itemUsed') {
+    else if (event.data.action === 'itemUsed')
         ItemUsed(event.data.alerts);
-    } else if (event.data.action == 'showActionBar') {
+    else if (event.data.action === 'showActionBar')
         ActionBar(event.data.items);
-    } else if (event.data.action == 'actionbarUsed') {
+    else if (event.data.action === 'actionbarUsed')
         ActionBarUsed(event.data.index);
-    } else if (event.data.action == 'unlock') {
+    else if (event.data.action === 'unlock')
         UnlockInventory()
-    } else if (event.data.action == 'lock') {
+    else if (event.data.action === 'lock')
         LockInventory()
-    }
-
 });
 
 function formatCurrency(x) {
@@ -111,18 +104,19 @@ function inventorySetup(invOwner, items, money, invTier) {
     setupweight(items, 'invnetory1')
     setupPlayerSlots();    
     $('#player-inv-label').html(firstTier.label + '-' + invOwner);
-    $('#player-inv-id').html('Weight: ' + (playerweight).toFixed(1) + ' / ' + (firstTier.maxweight).toFixed(1) + ' KG');
+    $('#player-inv-id').html('Weight: ' + (playerWeight).toFixed(1) + ' / ' + (firstTier.maxWeight).toFixed(1) + ' KG');
     $('#inventoryOne').data('invOwner', invOwner);
     $('#inventoryOne').data('invTier', invTier);
 
 
     firstUsed = 0;
     $.each(items, function(index, item) {
-        var slot = $('#inventoryOne').find('.slot').filter(function() {
+        const slot = $('#inventoryOne').find('.slot').filter(function () {
             return $(this).data('slot') === item.slot;
         });
+
         firstUsed++;
-        var slotId = $(slot).data('slot');
+        const slotId = $(slot).data('slot');
         firstItems[slotId] = item;
         AddItemToSlot(slot, item);
     });
@@ -139,17 +133,17 @@ function secondInventorySetup(invOwner, items, invTier, money) {
     setupweight(items, 'second')
     setupSecondarySlots(invOwner);
     $('#other-inv-label').html(secondTier.label + '-' + invOwner);
-    $('#other-inv-id').html('Weight: ' + (secondweight).toFixed(1) + ' / ' + (secondTier.maxweight).toFixed(1) + ' KG');
+    $('#other-inv-id').html('Weight: ' + (secondWeight).toFixed(1) + ' / ' + (secondTier.maxWeight).toFixed(1) + ' KG');
     $('#inventoryTwo').data('invOwner', invOwner);
     $('#inventoryTwo').data('invTier', invTier);
 
     secondUsed = 0;
     $.each(items, function(index, item) {
-        var slot = $('#inventoryTwo').find('.slot').filter(function() {
+        const slot = $('#inventoryTwo').find('.slot').filter(function () {
             return $(this).data('slot') === item.slot;
         });
         secondUsed++;
-        var slotId = $(slot).data('slot');
+        const slotId = $(slot).data('slot');
         secondItems[slotId] = item;
         AddItemToSlot(slot, item);
     });
@@ -182,15 +176,14 @@ function setupSecondarySlots(owner) {
         $('#inventoryTwo').find('.slot-template').data('slot', i);
         $('#inventoryTwo').find('.slot-template').data('inventory', 'inventoryTwo');
 
-        if (owner.startsWith("drop") || owner.startsWith("container") || owner.startsWith("car") || owner.startsWith("pd-trash")) {
+        if (owner.startsWith("drop") || owner.startsWith("container") || owner.startsWith("car") || owner.startsWith("pd-trash"))
             $('#inventoryTwo').find('.slot-template').addClass('temporary');
-        } else if (owner.startsWith("pv") || owner.startsWith("stash")) {
+        else if (owner.startsWith("pv") || owner.startsWith("stash"))
             $('#inventoryTwo').find('.slot-template').addClass('storage');
-        } else if (owner.startsWith("steam")) {
+        else if (owner.startsWith("steam"))
             $('#inventoryTwo').find('.slot-template').addClass('player');
-        } else if (owner.startsWith("pd-evidence")) {
+        else if (owner.startsWith("pd-evidence"))
             $('#inventoryTwo').find('.slot-template').addClass('evidence');
-        }
 
         $('#inventoryTwo').find('.slot-template').removeClass('slot-template');
     }
@@ -200,92 +193,68 @@ document.addEventListener('mousemove', function(event) {
     event.preventDefault();
     cursorX = event.clientX;
     cursorY = event.clientY;
-    if (dragging) {
+    if (dragging)
         if (draggingItem !== undefined && draggingItem !== null) {
             draggingItem.css('left', (cursorX - offset[0]) + 'px');
             draggingItem.css('top', (cursorY - offset[1]) + 'px');
         }
-    }
 }, true);
 
 $('#count').on('keyup blur', function(e) {
-    if ((e.which == 8 || e.which == undefined || e.which == 0)) {
+    if ((e.which === 8 || e.which === undefined || e.which === 0))
         e.preventDefault();
-    }
-
-    if ($(this).val() == '') {
-        $(this).val('0');
-    } else {
-        $(this).val(parseInt($(this).val()))
-    }
+    $(this).val() === '' ? $(this).val('0') : $(this).val(parseInt($(this).val()));
 });
 
 $(document).ready(function() {
-
     $('#inventoryOne, #inventoryTwo').on('click', '.slot', function(e) {
-        if (locked) {
+        if (locked)
             return
-        }
 
-        itemData = $(this).find('.item').data('item');
-        if (itemData == null && !dragging) {
+        const itemData = $(this).find('.item').data('item');
+        if (itemData == null && !dragging)
             return
-        }
+
         if (dragging) {
-            var Movecount = parseInt($("#count").val());
-            var item = origDrag.find('.item').data('item');
+            let moveCount = parseInt($("#count").val());
+            const item = origDrag.find('.item').data('item');
 
             try {
+                console.log("inventory.js | #001 | ", JSON.stringify(item))
                 item.qty
             } catch (error) {
                 EndDragging();
             }
 
-            if (Movecount > item.qty || Movecount === 0) {
-                Movecount = item.qty;
-            }
+            if (moveCount > item.qty || moveCount === 0)
+                moveCount = item.qty;
 
-            if (origDrag.data('invOwner') == $(this).parent().data('invOwner')) {
+            if (origDrag.data('invOwner') === $(this).parent().data('invOwner')) {
                 if ($(this).data('slot') !== undefined && $(origDrag).data('slot') !== $(this).data('slot') || $(this).data('slot') !== undefined && $(origDrag).data('invOwner') !== $(this).parent().data('invOwner')) {
-                    if ($(this).find('.item').data('item') !== undefined) {
-                        AttemptDropInOccupiedSlot(origDrag, $(this), parseInt($("#count").val()))
-                    } else {
-                        AttemptDropInEmptySlot(origDrag, $(this), parseInt($("#count").val()));
-                    }
+                    $(this).find('.item').data('item') !== undefined ? AttemptDropInOccupiedSlot(origDrag, $(this), parseInt($("#count").val())) : AttemptDropInEmptySlot(origDrag, $(this), parseInt($("#count").val()));
                     EndDragging();
-                } else {
+                } else
                     successAudio.play();
-                }
                 EndDragging();
             } else {
-                if ($(this).data('inventory') == 'inventoryOne') {
-                    if (firstTier.maxweight >= playerweight + (item.weight * Movecount)) {
-                        if (secondTier.name == 'shop') {
-                            if (0 <= (playermoney - item.price * Movecount)) {
-                                if ($(this).data('slot') !== undefined && $(origDrag).data('slot') !== $(this).data('slot') || $(this).data('slot') !== undefined && $(origDrag).data('invOwner') !== $(this).parent().data('invOwner')) {
-                                    if ($(this).find('.item').data('item') !== undefined) {
-                                        AttemptDropInOccupiedSlot(origDrag, $(this), parseInt($("#count").val()))
-                                    } else {
-                                        AttemptDropInEmptySlot(origDrag, $(this), parseInt($("#count").val()));
-                                    }
-                                } else {
+                if ($(this).data('inventory') === 'inventoryOne') {
+                    if (firstTier.maxWeight >= playerWeight + (item.weight * moveCount)) {
+                        if (secondTier.name === 'shop') {
+                            if (0 <= (playerMoney - item.price * moveCount)) {
+                                if ($(this).data('slot') !== undefined && $(origDrag).data('slot') !== $(this).data('slot') || $(this).data('slot') !== undefined && $(origDrag).data('invOwner') !== $(this).parent().data('invOwner'))
+                                    $(this).find('.item').data('item') !== undefined ? AttemptDropInOccupiedSlot(origDrag, $(this), parseInt($("#count").val())) : AttemptDropInEmptySlot(origDrag, $(this), parseInt($("#count").val()));
+                                else
                                     successAudio.play();
-                                }
                                 EndDragging();
                             } else {
                                 $.post("http://esx_inventory/MoneyError")
                                 EndDragging();
                             }
                         } else {
-                            if ($(this).data('slot') !== undefined && $(origDrag).data('slot') !== $(this).data('slot') || $(this).data('slot') !== undefined && $(origDrag).data('invOwner') !== $(this).parent().data('invOwner')) {
-                                if ($(this).find('.item').data('item') !== undefined) {
-                                    AttemptDropInOccupiedSlot(origDrag, $(this), parseInt($("#count").val()))
-                                } else {
-                                    AttemptDropInEmptySlot(origDrag, $(this), parseInt($("#count").val()));
-                                }
-                            } else {
+                            if ($(this).data('slot') !== undefined && $(origDrag).data('slot') !== $(this).data('slot') || $(this).data('slot') !== undefined && $(origDrag).data('invOwner') !== $(this).parent().data('invOwner'))
+                                $(this).find('.item').data('item') !== undefined ? AttemptDropInOccupiedSlot(origDrag, $(this), parseInt($("#count").val())) : AttemptDropInEmptySlot(origDrag, $(this), parseInt($("#count").val()));
+                            else
                                 successAudio.play();
-                            }
                             EndDragging();
                         }
                     } else {
@@ -293,16 +262,11 @@ $(document).ready(function() {
                         EndDragging();
                     }
                 } else {
-                    if (secondTier.maxweight >= secondweight + (item.weight * Movecount)) {
-                        if ($(this).data('slot') !== undefined && $(origDrag).data('slot') !== $(this).data('slot') || $(this).data('slot') !== undefined && $(origDrag).data('invOwner') !== $(this).parent().data('invOwner')) {
-                            if ($(this).find('.item').data('item') !== undefined) {
-                                AttemptDropInOccupiedSlot(origDrag, $(this), parseInt($("#count").val()))
-                            } else {
-                                AttemptDropInEmptySlot(origDrag, $(this), parseInt($("#count").val()));
-                            }
-                        } else {
+                    if (secondTier.maxWeight >= secondWeight + (item.weight * moveCount)) {
+                        if ($(this).data('slot') !== undefined && $(origDrag).data('slot') !== $(this).data('slot') || $(this).data('slot') !== undefined && $(origDrag).data('invOwner') !== $(this).parent().data('invOwner'))
+                            $(this).find('.item').data('item') !== undefined ? AttemptDropInOccupiedSlot(origDrag, $(this), parseInt($("#count").val())) : AttemptDropInEmptySlot(origDrag, $(this), parseInt($("#count").val()));
+                        else
                             successAudio.play();
-                        }
                         EndDragging();
                     } else {
                         $.post("http://esx_inventory/WeightError");
@@ -310,8 +274,6 @@ $(document).ready(function() {
                     }
                 }
             }
-
-
         } else {
             if (itemData !== undefined) {
                 // Store a reference because JS is retarded
@@ -334,13 +296,11 @@ $(document).ready(function() {
                 $('.ui').append(draggingItem);
 
 
-                if (!itemData.usable) {
+                if (!itemData.usable)
                     $("#use").addClass("disabled");
-                }
 
-                if (!itemData.giveable) {
+                if (!itemData.giveAble)
                     $("#give").addClass("disabled");
-                }
 
                 if (!itemData.canRemove) {
                     $("#drop").addClass("disabled");
@@ -348,9 +308,7 @@ $(document).ready(function() {
                 }
             }
             dragging = true;
-
         }
-
     });
 
     $('.close-ui').click(function(event, ui) {
@@ -368,7 +326,7 @@ $(document).ready(function() {
 
     $('#use').click(function(event, ui) {
         if (dragging) {
-            itemData = $(draggingItem).find('.item').data("item");
+            const itemData = $(draggingItem).find('.item').data("item");
             if (itemData.usable) {
                 InventoryLog('Using ' + itemData.label + ' and Close ' + itemData.closeUi);
                 $.post("http://esx_inventory/UseItem", JSON.stringify({
@@ -376,9 +334,10 @@ $(document).ready(function() {
                     slot: $(draggingItem).data('slot'),
                     item: itemData
                 }));
-                if (itemData.closeUi) {
+
+                if (itemData.closeUi)
                     closeInventory();
-                }
+
                 successAudio.play();
                 EndDragging();
             } else {
@@ -388,41 +347,26 @@ $(document).ready(function() {
     });
 
     $("#use").mouseenter(function() {
-        if (draggingItem != null && !$(this).hasClass('disabled')) {
+        if (draggingItem != null && !$(this).hasClass('disabled'))
             $(this).addClass('hover');
-        }
     }).mouseleave(function() {
         $(this).removeClass('hover');
     });
 
 
     $('#inventoryOne, #inventoryTwo').on('mouseenter', '.slot', function() {
-        var itemData = $(this).find('.item').data('item');
+        const itemData = $(this).find('.item').data('item');
         if (itemData !== undefined) {
             $('.tooltip-div').find('.tooltip-name').html(itemData.label);
 
-            if (itemData.stackable) {
-                $('.tooltip-div').find('.tooltip-uniqueness').html("Stack Max (" + itemData.max + ")");
-            } else {
-                $('.tooltip-div').find('.tooltip-uniqueness').html("Not Stackable");
-            }
-
-            if (itemData.description !== undefined) {
-                $('.tooltip-div').find('.tooltip-desc').html('Description: ' + itemData.description);
-            } else {
-                $('.tooltip-div').find('.tooltip-desc').html("This Item Has No Information");
-            }
-
-            if (itemData.weight !== undefined) {
-                $('.tooltip-div').find('.tooltip-weight').html('Tane Ağırlığı :' + itemData.weight);
-            } else {
-                $('.tooltip-div').find('.tooltip-weight').hide()
-            }
+            itemData.stackable ? $('.tooltip-div').find('.tooltip-uniqueness').html("Stack Max (" + itemData.max + ")") : $('.tooltip-div').find('.tooltip-uniqueness').html("Not Stackable");
+            itemData.description !== undefined ? $('.tooltip-div').find('.tooltip-desc').html('Description: ' + itemData.description) : $('.tooltip-div').find('.tooltip-desc').html("This Item Has No Information");
+            itemData.weight !== undefined ? $('.tooltip-div').find('.tooltip-weight').html('Weight: ' + itemData.weight) : $('.tooltip-div').find('.tooltip-weight').hide();
 
             if (itemData.staticMeta !== undefined || itemData.staticMeta !== "") {
-                if (itemData.type === 1) {
+                if (itemData.type === 1)
                     $('.tooltip-div').find('.tooltip-meta').append('<div class="meta-entry"><div class="meta-key">Registered Owner</div> : <div class="meta-val">' + itemData.staticMeta.owner + '</div></div>');
-                } else if (itemData.itemId === 'license') {
+                else if (itemData.itemId === 'license') {
                     $('.tooltip-div').find('.tooltip-meta').append('<div class="meta-entry"><div class="meta-key">Name</div> : <div class="meta-val">' + itemData.staticMeta.name + '</div></div>');
                     $('.tooltip-div').find('.tooltip-meta').append('<div class="meta-entry"><div class="meta-key">Issued On</div> : <div class="meta-val">' + itemData.staticMeta.issuedDate + '</div></div>');
                     $('.tooltip-div').find('.tooltip-meta').append('<div class="meta-entry"><div class="meta-key">Height</div> : <div class="meta-val">' + itemData.staticMeta.height + '</div></div>');
@@ -430,15 +374,12 @@ $(document).ready(function() {
                     $('.tooltip-div').find('.tooltip-meta').append('<div class="meta-entry"><div class="meta-key">Phone Number</div> : <div class="meta-val">' + itemData.staticMeta.phone + '</div></div>');
                     $('.tooltip-div').find('.tooltip-meta').append('<div class="meta-entry"><div class="meta-key">Citizen ID</div> : <div class="meta-val">' + itemData.staticMeta.id + '-' + itemData.staticMeta.user + '</div></div>');
 
-                    if (itemData.staticMeta.endorsements !== undefined) {
+                    if (itemData.staticMeta.endorsements !== undefined)
                         $('.tooltip-div').find('.tooltip-meta').append('<div class="meta-entry"><div class="meta-key">Endorsement</div> : <div class="meta-val">' + itemData.staticMeta.endorsements + '</div></div>');
-                    }
-                } else if (itemData.itemId === 'gold') {
+                } else if (itemData.itemId === 'gold')
                     $('.tooltip-div').find('.tooltip-meta').append('<div class="meta-entry"><div class="meta-key"></div> : <div class="meta-val">This Bar Has A Serial Number Engraved Into It Registered To San Andreas Federal Reserve</div></div>');
-                }
-            } else {
+            } else
                 $('.tooltip-div').find('.tooltip-meta').html("This Item Has No Information");
-            }
             $('.tooltip-div').show();
         }
     });
@@ -451,54 +392,29 @@ $(document).ready(function() {
     });
 
     $("body").on("keyup", function(key) {
-        if (Config.closeKeys.includes(key.which)) {
+        if (Config.closeKeys.includes(key.which))
             closeInventory();
-        }
 
-        if (key.which === 69) {
-            if (type === "trunk") {
+        if (key.which === 69)
+            if (type === "trunk")
                 closeInventory();
-            }
-        }
     });
 });
 
 function SearchInventory(searchVal) {
     if (searchVal !== '') {
-        $.each(
-            $('#search')
-            .parent()
-            .parent()
-            .parent()
-            .find('#inventoryOne, #inventoryTwo')
-            .children(),
+        $.each($('#search').parent().parent().parent().find('#inventoryOne, #inventoryTwo').children(),
             function(index, slot) {
                 let item = $(slot).find('.item').data('item');
 
-                if (item != null) {
-                    if (
-                        item.label.toUpperCase().includes(searchVal.toUpperCase()) ||
-                        item.itemId.includes(searchVal.toUpperCase())
-                    ) {
-                        $(slot).removeClass('search-non-match');
-                    } else {
-                        $(slot).addClass('search-non-match');
-                    }
-                } else {
+                if (item != null)
+                    item.label.toUpperCase().includes(searchVal.toUpperCase()) || item.itemId.includes(searchVal.toUpperCase()) ? $(slot).removeClass('search-non-match') : $(slot).addClass('search-non-match');
+                else
                     $(slot).addClass('search-non-match');
-                }
             }
         );
-
     } else {
-        $.each(
-            $('#search')
-            .parent()
-            .parent()
-            .parent()
-            .find('#inventoryOne, #inventoryTwo')
-            .children(),
-            function(index, slot) {
+        $.each($('#search').parent().parent().parent().find('#inventoryOne, #inventoryTwo').children(), function(index, slot) {
                 $(slot).removeClass('search-non-match');
             }
         );
@@ -507,18 +423,16 @@ function SearchInventory(searchVal) {
 
 
 function AttemptDropInEmptySlot(origin, destination, moveQty) {
-    var result = ErrorCheck(origin, destination, moveQty);
+    const result = ErrorCheck(origin, destination, moveQty);
     if (result === -1) {
         $('.slot.error').removeClass('error');
-        var item = origin.find('.item').data('item');
+        const item = origin.find('.item').data('item');
 
-        if (item == null) {
+        if (item == null)
             return;
-        }
 
-        if (moveQty > item.qty || moveQty === 0) {
+        if (moveQty > item.qty || moveQty === 0)
             moveQty = item.qty;
-        }
 
         if (moveQty === item.qty) {
             ResetSlotToEmpty(origin);
@@ -540,7 +454,7 @@ function AttemptDropInEmptySlot(origin, destination, moveQty) {
             }));
             LockInventory();
         } else {
-            var item2 = Object.create(item);
+            const item2 = Object.create(item);
             item2.slot = destination.data('slot');
             item2.qty = moveQty;
             item.qty = item.qty - moveQty;
@@ -579,21 +493,19 @@ function AttemptDropInEmptySlot(origin, destination, moveQty) {
 }
 
 function AttemptDropInOccupiedSlot(origin, destination, moveQty) {
-    var result = ErrorCheck(origin, destination, moveQty);
+    const result = ErrorCheck(origin, destination, moveQty);
 
-    var originItem = origin.find('.item').data('item');
-    var destinationItem = destination.find('.item').data('item');
+    const originItem = origin.find('.item').data('item');
+    const destinationItem = destination.find('.item').data('item');
 
-    if (originItem == undefined || destinationItem == undefined) {
+    if (originItem === undefined || destinationItem === undefined)
         return;
-    }
 
     if (result === -1) {
         $('.slot.error').removeClass('error');
         if (originItem.itemId === destinationItem.itemId && destinationItem.stackable) {
-            if (moveQty > originItem.qty || moveQty === 0) {
+            if (moveQty > originItem.qty || moveQty === 0)
                 moveQty = originItem.qty;
-            }
 
             if (moveQty != originItem.qty && destinationItem.qty + moveQty <= destinationItem.max) {
                 originItem.qty -= moveQty;
@@ -658,7 +570,7 @@ function AttemptDropInOccupiedSlot(origin, destination, moveQty) {
                     }));
                     LockInventory();
                 } else if (destinationItem.qty < destinationItem.max) {
-                    var newOrigQty = destinationItem.max - destinationItem.qty;
+                    const newOrigQty = destinationItem.max - destinationItem.qty;
                     originItem.qty = newOrigQty;
                     AddItemToSlot(origin, originItem);
                     destinationItem.qty = destinationItem.max;
@@ -680,11 +592,9 @@ function AttemptDropInOccupiedSlot(origin, destination, moveQty) {
                         destinationItem: destinationItem,
                     }));
                     LockInventory();
-                } else {
+                } else
                     DisplayMoveError(origin, destination, "Stack At Max Items");
-                }
             }
-
         } else {
             destinationItem.slot = origin.data('slot');
             originItem.slot = destination.data('slot');
@@ -729,20 +639,20 @@ function AttemptDropInOccupiedSlot(origin, destination, moveQty) {
 }
 
 function ErrorCheck(origin, destination, moveQty) {
-    var originOwner = origin.parent().data('invOwner');
-    var destinationOwner = destination.parent().data('invOwner');
+    let item;
+    const originOwner = origin.parent().data('invOwner');
+    const destinationOwner = destination.parent().data('invOwner');
 
-    if (destinationOwner === undefined) {
+    if (destinationOwner === undefined)
         return 1
-    }
 
-    var sameInventory = (originOwner === destinationOwner);
-    var status = -1;
+    const sameInventory = (originOwner === destinationOwner);
+    const status = -1;
 
-    if (sameInventory) {} else if (originOwner === $('#inventoryOne').data('invOwner') && destinationOwner === $('#inventoryTwo').data('invOwner')) {
-        var item = origin.find('.item').data('item');
+    /*if (sameInventory) {} else*/ if (originOwner === $('#inventoryOne').data('invOwner') && destinationOwner === $('#inventoryTwo').data('invOwner')) {
+        item = origin.find('.item').data('item');
     } else {
-        var item = origin.find('.item').data('item');
+        item = origin.find('.item').data('item');
     }
 
     return status
@@ -759,9 +669,10 @@ function ResetSlotToEmpty(slot) {
 function AddItemToSlot(slot, data) {
     slot.find('.empty-item').removeClass('empty-item');
     slot.find('.item').css('background-image', 'url(\'img/items/' + data.itemId + '.png\')');
-    if (data.price !== undefined && data.price !== 0) {
+
+    if (data.price !== undefined && data.price !== 0)
         slot.find('.item-price').html('$' + data.price);
-    }
+
     slot.find('.item-count').html(data.qty + '(' + (data.weight * data.qty).toFixed(1) + ')');
     slot.find('.item-name').html(data.label);
     slot.find('.item').data('item', data);
@@ -779,9 +690,10 @@ function DisplayMoveError(origin, destination, error) {
     failAudio.play();
     origin.addClass('error');
     destination.addClass('error');
-    if (errorHighlightTimer != null) {
+
+    if (errorHighlightTimer != null)
         clearTimeout(errorHighlightTimer);
-    }
+
     errorHighlightTimer = setTimeout(function() {
         origin.removeClass('error');
         destination.removeClass('error');
@@ -791,7 +703,7 @@ function DisplayMoveError(origin, destination, error) {
 }
 
 
-var alertTimer = null;
+let alertTimer = null;
 
 function ItemUsed(alerts) {
     clearTimeout(alertTimer);
@@ -819,7 +731,7 @@ function ItemUsed(alerts) {
     });
 }
 
-var actionBarTimer = null;
+let actionBarTimer = null;
 
 function ActionBar(items, timer) {
     if ($('#action-bar').is(':visible')) {
@@ -869,17 +781,14 @@ function ActionBar(items, timer) {
     }
 }
 
-var usedActionTimer = null;
+let usedActionTimer = null;
 
 function ActionBarUsed(index) {
     clearTimeout(usedActionTimer);
 
     if ($('#action-bar .slot').is(':visible')) {
-        if ($(`.slot-${index - 1}`).data('empty') != null) {
-            $(`.slot-${index - 1}`).addClass('empty-used');
-        } else {
-            $(`.slot-${index - 1}`).addClass('used');
-        }
+        $(`.slot-${index - 1}`).data('empty') != null ? $(`.slot-${index - 1}`).addClass('empty-used') : $(`.slot-${index - 1}`).addClass('used');
+
         usedActionTimer = setTimeout(function() {
             $(`.slot-${index - 1}`).removeClass('used');
             $(`.slot-${index - 1}`).removeClass('empty-used');
@@ -900,19 +809,17 @@ function UnlockInventory() {
 }
 
 function setupweight(items, invtowener) {
-    if (invtowener == 'invnetory1') {
-        playerweight = 0
-        playermoney = 0
+    if (invtowener === 'invnetory1') {
+        playerWeight = 0
+        playerMoney = 0
         for (const [key, value] of Object.entries(items)) {
-            playerweight = playerweight + (value.weight * value.qty)
-            if (value.id == 'cash') {
-                playermoney = value.qty
-            }
+            playerWeight = playerWeight + (value.weight * value.qty)
+            if (value.id === 'cash')
+                playerMoney = value.qty
         }
     } else {
-        secondweight = 0
-        for (const [key, value] of Object.entries(items)) {
-            secondweight = secondweight + (value.weight * value.qty)
-        }
+        secondWeight = 0
+        for (const [key, value] of Object.entries(items))
+            secondWeight = secondWeight + (value.weight * value.qty)
     }
 }

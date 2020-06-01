@@ -1,155 +1,149 @@
 Config = {}
 
-Config.Locale = 'en'
-Config.OpenControl = 289
-Config.TrunkOpenControl = 47
-Config.DeleteDropsOnStart = true
-Config.HotKeyCooldown = 1000
-Config.CheckLicense = true
-Config.PlayerMaxWeight = 100 --oyuncunın alabileceği max ağırlık
-Config.StashMaxWeight = 650 --depoların alabileceği max ağırlık
-Config.GloveboxMaxWeight = 30--torpidoların alabileceği max ağırlık
+Config.Locale = 'pt'
+Config.OpenControl = 289 -- Tecla F2
+Config.TrunkOpenControl = 47 -- Tecla G
+Config.DeleteDropsOnStart = false -- Deseja remover os drops no startup do servidor?
+Config.HotbarKeyCooldown = 1000 -- Em milisegundos
+Config.CheckLicense = true -- Necessita do esx_licenses
 
--- Ammo section
-Config.EnableInventoryHUD = true
-Config.ReloadTime = 2000 --ms
+-- Weights
+Config.PlayerMaxWeight = 100 -- Peso máximo que o jogador pode suportar
+Config.StashMaxWeight = 650 -- Peso máximo que os armazéns podem suportar
+Config.GloveboxMaxWeight = 30 -- Peso máximo que os torpedos podem suportar
 
 Config.Ammo = {
     {
         name = 'AMMO_PISTOL',
         weapons = {
-            "WEAPON_PISTOL",
-            "WEAPON_APPISTOL",
-            "WEAPON_SNSPISTOL",
-            "WEAPON_COMBATPISTOL",
-            "WEAPON_HEAVYPISTOL",
-            "WEAPON_MACHINEPISTOL",
-            "WEAPON_MARKSMANPISTOL",
-            "WEAPON_PISTOL50",
-            "WEAPON_VINTAGEPISTOL",
-            "WEAPON_DOUBLEACTION",
-            "WEAPON_REVOLVER",
-
+            'WEAPON_PISTOL',
+            'WEAPON_APPISTOL',
+            'WEAPON_SNSPISTOL',
+            'WEAPON_COMBATPISTOL',
+            'WEAPON_HEAVYPISTOL',
+            'WEAPON_MACHINEPISTOL',
+            'WEAPON_MARKSMANPISTOL',
+            'WEAPON_PISTOL50',
+            'WEAPON_VINTAGEPISTOL',
+            'WEAPON_DOUBLEACTION',
+            'WEAPON_REVOLVER'
         },
         count = 30
     },
     {
         name = 'AMMO_PISTOL_LARGE',
         weapons = {
-            "WEAPON_PISTOL",
-            "WEAPON_APPISTOL",
-            "WEAPON_SNSPISTOL",
-            "WEAPON_COMBATPISTOL",
-            "WEAPON_HEAVYPISTOL",
-            "WEAPON_MACHINEPISTOL",
-            "WEAPON_MARKSMANPISTOL",
-            "WEAPON_PISTOL50",
-            "WEAPON_VINTAGEPISTOL",
-            "WEAPON_DOUBLEACTION",
-            "WEAPON_REVOLVER",
+            'WEAPON_PISTOL',
+            'WEAPON_APPISTOL',
+            'WEAPON_SNSPISTOL',
+            'WEAPON_COMBATPISTOL',
+            'WEAPON_HEAVYPISTOL',
+            'WEAPON_MACHINEPISTOL',
+            'WEAPON_MARKSMANPISTOL',
+            'WEAPON_PISTOL50',
+            'WEAPON_VINTAGEPISTOL',
+            'WEAPON_DOUBLEACTION',
+            'WEAPON_REVOLVER'
         },
         count = 60
     },
     {
         name = 'AMMO_SHOTGUN',
         weapons = {
-            "WEAPON_ASSAULTSHOTGUN",
-            "WEAPON_AUTOSHOTGUN",
-            "WEAPON_BULLPUPSHOTGUN",
-            "WEAPON_DBSHOTGUN",
-            "WEAPON_HEAVYSHOTGUN",
-            "WEAPON_PUMPSHOTGUN",
-            "WEAPON_SAWNOFFSHOTGUN",
-            "WEAPON_MUSKET",
+            'WEAPON_ASSAULTSHOTGUN',
+            'WEAPON_AUTOSHOTGUN',
+            'WEAPON_BULLPUPSHOTGUN',
+            'WEAPON_DBSHOTGUN',
+            'WEAPON_HEAVYSHOTGUN',
+            'WEAPON_PUMPSHOTGUN',
+            'WEAPON_SAWNOFFSHOTGUN',
+            'WEAPON_MUSKET'
         },
         count = 12
     },
     {
         name = 'AMMO_SHOTGUN_LARGE',
         weapons = {
-            "WEAPON_ASSAULTSHOTGUN",
-            "WEAPON_AUTOSHOTGUN",
-            "WEAPON_BULLPUPSHOTGUN",
-            "WEAPON_DBSHOTGUN",
-            "WEAPON_HEAVYSHOTGUN",
-            "WEAPON_PUMPSHOTGUN",
-            "WEAPON_SAWNOFFSHOTGUN",
-            "WEAPON_MUSKET",
+            'WEAPON_ASSAULTSHOTGUN',
+            'WEAPON_AUTOSHOTGUN',
+            'WEAPON_BULLPUPSHOTGUN',
+            'WEAPON_DBSHOTGUN',
+            'WEAPON_HEAVYSHOTGUN',
+            'WEAPON_PUMPSHOTGUN',
+            'WEAPON_SAWNOFFSHOTGUN',
+            'WEAPON_MUSKET'
         },
         count = 18
     },
     {
         name = 'AMMO_SMG',
         weapons = {
-            "WEAPON_ASSAULTSMG",
-            "WEAPON_MICROSMG",
-            "WEAPON_MINISMG",
-            "WEAPON_SMG",
-            "WEAPON_COMBATMG",
-            "WEAPON_COMBATPDW",
-            "WEAPON_GUSENBERG",
-
-
+            'WEAPON_ASSAULTSMG',
+            'WEAPON_MICROSMG',
+            'WEAPON_MINISMG',
+            'WEAPON_SMG',
+            'WEAPON_COMBATMG',
+            'WEAPON_COMBATPDW',
+            'WEAPON_GUSENBERG'
         },
         count = 45
     },
     {
         name = 'AMMO_SMG_LARGE',
         weapons = {
-            "WEAPON_ASSAULTSMG",
-            "WEAPON_MICROSMG",
-            "WEAPON_MINISMG",
-            "WEAPON_SMG",
-            "WEAPON_COMBATMG",
-            "WEAPON_COMBATPDW",
-            "WEAPON_GUSENBERG",
-
+            'WEAPON_ASSAULTSMG',
+            'WEAPON_MICROSMG',
+            'WEAPON_MINISMG',
+            'WEAPON_SMG',
+            'WEAPON_COMBATMG',
+            'WEAPON_COMBATPDW',
+            'WEAPON_GUSENBERG'
         },
         count = 65
     },
     {
         name = 'AMMO_RIFLE',
         weapons = {
-            "WEAPON_ADVANCEDRIFLE",
-            "WEAPON_ASSAULTRIFLE",
-            "WEAPON_BULLPUPRIFLE",
-            "WEAPON_CARBINERIFLE",
-            "WEAPON_SPECIALCARBINE",
-            "WEAPON_COMPACTRIFLE",
-            "WEAPON_MG",
-            "WEAPON_RAILGUN",
+            'WEAPON_ADVANCEDRIFLE',
+            'WEAPON_ASSAULTRIFLE',
+            'WEAPON_BULLPUPRIFLE',
+            'WEAPON_CARBINERIFLE',
+            'WEAPON_SPECIALCARBINE',
+            'WEAPON_COMPACTRIFLE',
+            'WEAPON_MG',
+            'WEAPON_RAILGUN'
         },
         count = 45
     },
     {
         name = 'AMMO_RIFLE_LARGE',
         weapons = {
-            "WEAPON_ADVANCEDRIFLE",
-            "WEAPON_ASSAULTRIFLE",
-            "WEAPON_BULLPUPRIFLE",
-            "WEAPON_CARBINERIFLE",
-            "WEAPON_SPECIALCARBINE",
-            "WEAPON_COMPACTRIFLE",
-            "WEAPON_MG",
-            "WEAPON_RAILGUN",
+            'WEAPON_ADVANCEDRIFLE',
+            'WEAPON_ASSAULTRIFLE',
+            'WEAPON_BULLPUPRIFLE',
+            'WEAPON_CARBINERIFLE',
+            'WEAPON_SPECIALCARBINE',
+            'WEAPON_COMPACTRIFLE',
+            'WEAPON_MG',
+            'WEAPON_RAILGUN'
         },
         count = 65
     },
     {
         name = 'AMMO_SNIPER',
         weapons = {
-            "WEAPON_SNIPERRIFLE",
-            "WEAPON_HEAVYSNIPER",
-            "WEAPON_MARKSMANRIFLE"
+            'WEAPON_SNIPERRIFLE',
+            'WEAPON_HEAVYSNIPER',
+            'WEAPON_MARKSMANRIFLE'
         },
         count = 10
     },
     {
         name = 'AMMO_SNIPER_LARGE',
         weapons = {
-            "WEAPON_SNIPERRIFLE",
-            "WEAPON_HEAVYSNIPER",
-            "WEAPON_MARKSMANRIFLE"
+            'WEAPON_SNIPERRIFLE',
+            'WEAPON_HEAVYSNIPER',
+            'WEAPON_MARKSMANRIFLE'
         },
         count = 15
     }
@@ -169,12 +163,12 @@ Config.Shops = {
             vector3(26.18, -1347.37, 28.650),
         },
         items = {
-            { name = "bread", price = 20, count = 10 },
-            { name = "water", price = 10, count = 10 },
+            { name = 'bread', price = 20, count = 10 },
+            { name = 'water', price = 10, count = 10 },
         },
         markerType = 27,
         markerColour = { r = 0, g = 255, b = 0 },
-        msg = '~INPUT_CONTEXT~ Basarak Marketi Aç.',
+        msg = nil,
         enableBlip = true,
         job = 'all'
     },
@@ -188,12 +182,12 @@ Config.Shops = {
             vector3(1698.19, 4924.7, 41.16)
         },
         items = {
-            { name = "bread", price = 20, count = 10 },
-            { name = "water", price = 10, count = 10 },
+            { name = 'bread', price = 20, count = 10 },
+            { name = 'water', price = 10, count = 10 },
         },
         markerType = 27,
         markerColour = { r = 255, g = 0, b = 0  },
-        msg = '~INPUT_CONTEXT~ Basarak Marketi Aç.',
+        msg = nil,
         enableBlip = true,
         job = 'all'
     },
@@ -203,23 +197,23 @@ Config.Shops = {
         },
         items = {
             -- Ammo
-            { name = "AMMO_PISTOL", price = 0, count = 1, grade = 0 },
-            { name = "AMMO_PISTOL_LARGE", price = 0, count = 1, grade = 0 },
-            { name = "AMMO_RIFLE", price = 0, count = 1, grade = 0 },
-            { name = "AMMO_RIFLE_LARGE", price = 0, count = 1, grade = 0 },
-            { name = "AMMO_SHOTGUN", price = 0, count = 1, grade = 0 },
-            { name = "AMMO_SMG", price = 0, count = 1, grade = 0 },
-            { name = "AMMO_SNIPER", price = 0, count = 1, grade = 0 },
-            { name = "WEAPON_COMBATPISTOL", price = 0, count = 1, grade = 0 },
-            { name = "WEAPON_STUNGUN", price = 0, count = 1, grade = 0 },
-            { name = "WEAPON_NIGHTSTICK", price = 0, count = 1, grade = 0 },
-            { name = "WEAPON_FLASHLIGHT", price = 0, count = 1, grade = 0 },
-            { name = "WEAPON_PUMPSHOTGUN", price = 0, count = 1, grade = 2 },
-            { name = "WEAPON_CARBINERIFLE", price = 0, count = 1, grade = 3 },
+            { name = 'AMMO_PISTOL', price = 0, count = 1, grade = 0 },
+            { name = 'AMMO_PISTOL_LARGE', price = 0, count = 1, grade = 0 },
+            { name = 'AMMO_RIFLE', price = 0, count = 1, grade = 0 },
+            { name = 'AMMO_RIFLE_LARGE', price = 0, count = 1, grade = 0 },
+            { name = 'AMMO_SHOTGUN', price = 0, count = 1, grade = 0 },
+            { name = 'AMMO_SMG', price = 0, count = 1, grade = 0 },
+            { name = 'AMMO_SNIPER', price = 0, count = 1, grade = 0 },
+            { name = 'WEAPON_COMBATPISTOL', price = 0, count = 1, grade = 0 },
+            { name = 'WEAPON_STUNGUN', price = 0, count = 1, grade = 0 },
+            { name = 'WEAPON_NIGHTSTICK', price = 0, count = 1, grade = 0 },
+            { name = 'WEAPON_FLASHLIGHT', price = 0, count = 1, grade = 0 },
+            { name = 'WEAPON_PUMPSHOTGUN', price = 0, count = 1, grade = 2 },
+            { name = 'WEAPON_CARBINERIFLE', price = 0, count = 1, grade = 3 },
         },
         markerType = 2,
         markerColour = { r = 0, g = 0, b = 255 },
-        msg = '[E] Police shop',
+        msg = 'Pressione na tecla ~INPUT_CONTEXT~ para abrir a loja da polícia.',
         job = 'police'
     },
 }
@@ -231,7 +225,7 @@ Config.Stash = {
         job = 'police',
         markerType = 2,
         markerColour = { r = 255, g = 255, b = 255 },
-        msg = 'Open Stash ~INPUT_CONTEXT~'
+        msg = 'Pressione na tecla ~INPUT_CONTEXT~ para abrir o cofre da polícia.'
     },
     ['Mc'] = {
         coords = vector3(457.76, -979.05, 30.69),
@@ -239,23 +233,23 @@ Config.Stash = {
         job = 'police',
         markerType = 2,
         markerColour = { r = 255, g = 255, b = 255 },
-        msg = 'Open Stash ~INPUT_CONTEXT~'
+        msg = nil
     }
 }
 
-Config.VehicleLimit = { -- ARAÇ ÖZEL SLOT
+Config.VehicleLimit = { -- Número de slots
     ['Zentorno'] = 10,
     ['Panto'] = 1,
     ['Zion'] = 5
 }
 
-Config.VehicleWeight2 = { -- ARAÇ ÖZEL WEİGHT
+Config.VehicleWeight2 = { -- Número de peso
     ['Zentorno'] = 10,
     ['Panto'] = 1,
     ['Zion'] = 5
 }
 
---Courtesy DoctorTwitch -- STANDART katagoriye göre weight eğer üste eklemediyseniz aracınız burdan standartı alır addon araç ise hata alırsınız üste ekleyin.
+-- Se o seu peso não for adicionado em cima, seu veículo obterá os valores padrões listado em baixo dependendo da sua categoria
 Config.VehicleSlot = {
     [0] = 10, --Compact
     [1] = 15, --Sedan

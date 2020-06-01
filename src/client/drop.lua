@@ -5,14 +5,14 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000)
         local coords = GetEntityCoords(GetPlayerPed(-1))
-        for k, v in pairs(serverDrops) do
-            local dropCoords = getCoordsFromOwner(k)
+        for itemKey, v in pairs(serverDrops) do
+            local dropCoords = getCoordsFromOwner(itemKey)
             if GetDistanceBetweenCoords(dropCoords.x, dropCoords.y, dropCoords.z, coords.x, coords.y, coords.z, true) < 20 then
-                if drops[k] then
-                    drops[k].active = true
+                if drops[itemKey] then
+                    drops[itemKey].active = true
                 else
-                    drops[k] = {
-                        name = k,
+                    drops[itemKey] = {
+                        name = itemKey,
                         coords = dropCoords,
                         active = true
                     }

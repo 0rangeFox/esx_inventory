@@ -20,8 +20,8 @@ AddEventHandler('esx_inventory:RegisterInventory', function(inventory)
     end
 
     if inventory.applyToInventory == nil then
-        inventory.applyToInventory = function(identifier, f)
-            applyToInventory(identifier, inventory.name, f)
+        inventory.applyToInventory = function(identifier, invFunction)
+            applyToInventory(identifier, inventory.name, invFunction)
         end
     end
 
@@ -53,27 +53,36 @@ ESX.RegisterServerCallback('esx_inventory:doesInvTypeExists', function(source, c
     cb(InvType[type] ~= nil)
 end)
 
-RegisterCommand('ensureInv', function(source)
-    local owner = ESX.GetPlayerFromId(source).identifier
-    MySQL.Async.fetchAll('DELETE FROM inventories WHERE data = @data AND owner = @owner', { ['@data'] = "null", ['@owner'] = owner })  -- Tgiann "Null" Fix
-    ensureInventories(source)
-end)
+ESX.RegisterCommand({'cli', 'closeInv', 'closeInventory'}, 'user', function(xPlayer, args, showError)
+    TriggerClientEvent('esx_inventory:closeInventory', xPlayer.source)
+end, false, {help = _U('closeInventory')})
 
-function ensureInventories(source)
-    local player = ESX.GetPlayerFromId(source)
-    ensurePlayerInventory(player)
-    TriggerClientEvent('esx_inventory:refreshInventory', source)
+ESX.RegisterCommand({'ensureInv', 'ensureInventory'}, 'admin', function(xPlayer, args, showError)
+    local xPlayerUpdated = xPlayer
+    if args.playerId and tonumber(args.playerId) then
+        xPlayerUpdated = ESX.GetPlayerFromId(args.playerId)
+    end
+
+    MySQL.Async.fetchAll('DELETE FROM inventories WHERE data = @data AND owner = @owner', {['@data'] = 'null', ['@owner'] = xPlayerUpdated.identifier })
+    ensureInventories(xPlayerUpdated)
+end, false, {help = _U('ensureInventory'), validate = false, arguments = {
+    {name = 'playerId', help = _U('commandgeneric_playerid'), type = 'any'}
+}})
+
+function ensureInventories(xPlayer)
+    ensurePlayerInventory(xPlayer)
+    TriggerClientEvent('esx_inventory:refreshInventory', xPlayer.source)
 end
 
-AddEventHandler("onResourceStop", function(resource)
+AddEventHandler('onResourceStop', function(resource)
     if resource == GetCurrentResourceName() then
         saveInventories()
     end
 end)
 
 AddEventHandler('esx:playerLoaded', function(data)
-    local player = ESX.GetPlayerFromId(data)
-    ensurePlayerInventory(player)
+    local xPlayer = ESX.GetPlayerFromId(data)
+    ensurePlayerInventory(xPlayer)
 end)
 
 Citizen.CreateThread(function()

@@ -50,15 +50,16 @@ AddEventHandler('esx_inventory:refreshInventory', function()
     if secondInventory ~= nil then
         refreshSecondaryInventory()
     end
+
     SendNUIMessage({
-        action = "unlock"
+        action = 'unlock'
     })
 end)
 
 function refreshPlayerInventory()
     ESX.TriggerServerCallback('esx_inventory:getPlayerInventory', function(data)
         SendNUIMessage({
-            action = "setItems",
+            action = 'setItems',
             itemList = data.inventory,
             invOwner = data.invId,
             invTier = data.invTier,
@@ -80,8 +81,13 @@ function refreshSecondaryInventory()
     ESX.TriggerServerCallback('esx_inventory:canOpenInventory', function(canOpen)
         if canOpen or secondInventory.type == 'shop' then
             ESX.TriggerServerCallback('esx_inventory:getSecondaryInventory', function(data)
+                print('refreshSecondaryInventory() | Data: ' .. json.encode(data))
+                print('refreshSecondaryInventory() | Data Inventory: ' .. json.encode(data.inventory))
+                print('refreshSecondaryInventory() | Data Inventory ID: ' .. json.encode(data.invId))
+                print('refreshSecondaryInventory() | Data Inventory Tier: ' .. json.encode(data.invTier))
+
                 SendNUIMessage({
-                    action = "setSecondInventoryItems",
+                    action = 'setSecondInventoryItems',
                     itemList = data.inventory,
                     invOwner = data.invId,
                     invTier = data.invTier,
@@ -92,88 +98,103 @@ function refreshSecondaryInventory()
                 })
 
                 SendNUIMessage({
-                    action = "show",
+                    action = 'show',
                     type = 'secondary'
                 })
+
                 TriggerServerEvent('esx_inventory:openInventory', secondInventory)
             end, secondInventory.type, secondInventory.owner)
         else
             SendNUIMessage({
-                action = "hide",
+                action = 'hide',
                 type = 'secondary'
             })
         end
     end, secondInventory.type, secondInventory.owner)
 end
 
-function closeInventory()
-    isInInventory = false
-    SendNUIMessage({ action = "hide", type = 'primary' })
-    SetNuiFocus(false, false)
-    TriggerServerEvent('esx_inventory:closeInventory', {
-        type = 'player',
-        owner = ESX.GetPlayerData().identifier
-    })
-    if secondInventory ~= nil then
-        TriggerServerEvent('esx_inventory:closeInventory', secondInventory)
-    end
-end
-
 RegisterNetEvent('esx_inventory:openInventory')
-AddEventHandler('esx_inventory:openInventory', function(sI)
-    openInventory(sI)
+AddEventHandler('esx_inventory:openInventory', function(secondInventory)
+    openInventory(secondInventory)
 end)
 
 function openInventory(_secondInventory)
     isInInventory = true
     refreshPlayerInventory()
+
     SendNUIMessage({
-        action = "display",
-        type = "normal"
+        action = 'display',
+        type = 'normal'
     })
+
     if _secondInventory ~= nil then
         secondInventory = _secondInventory
         refreshSecondaryInventory()
+
         SendNUIMessage({
-            action = "display",
+            action = 'display',
             type = 'secondary'
         })
     end
+
     SetNuiFocus(true, true)
 end
 
-RegisterNetEvent("esx_inventory:MoveToEmpty")
-AddEventHandler("esx_inventory:MoveToEmpty", function(data)
+RegisterNetEvent('esx_inventory:closeInventory')
+AddEventHandler('esx_inventory:closeInventory', function()
+    closeInventory()
+end)
+
+function closeInventory()
+    isInInventory = false
+    SendNUIMessage({
+        action = 'hide',
+        type = 'primary'
+    })
+    SetNuiFocus(false, false)
+
+    TriggerServerEvent('esx_inventory:closeInventory', {
+        type = 'player',
+        owner = ESX.GetPlayerData().identifier
+    })
+
+    if secondInventory ~= nil then
+        TriggerServerEvent('esx_inventory:closeInventory', secondInventory)
+    end
+end
+
+RegisterNetEvent('esx_inventory:MoveToEmpty')
+AddEventHandler('esx_inventory:MoveToEmpty', function(data)
     playPickupOrDropAnimation(data)
     playStealOrSearchAnimation(data)
 end)
 
-RegisterNetEvent("esx_inventory:EmptySplitStack")
-AddEventHandler("esx_inventory:EmptySplitStack", function(data)
+RegisterNetEvent('esx_inventory:EmptySplitStack')
+AddEventHandler('esx_inventory:EmptySplitStack', function(data)
     playPickupOrDropAnimation(data)
     playStealOrSearchAnimation(data)
 end)
 
-RegisterNetEvent("esx_inventory:TopoffStack")
-AddEventHandler("esx_inventory:TopoffStack", function(data)
+RegisterNetEvent('esx_inventory:TopoffStack')
+AddEventHandler('esx_inventory:TopoffStack', function(data)
     playPickupOrDropAnimation(data)
     playStealOrSearchAnimation(data)
 end)
 
-RegisterNetEvent("esx_inventory:SplitStack")
-AddEventHandler("esx_inventory:SplitStack", function(data)
+RegisterNetEvent('esx_inventory:SplitStack')
+AddEventHandler('esx_inventory:SplitStack', function(data)
     playPickupOrDropAnimation(data)
     playStealOrSearchAnimation(data)
 end)
 
-RegisterNetEvent("esx_inventory:CombineStack")
-AddEventHandler("esx_inventory:CombineStack", function(data)
+RegisterNetEvent('esx_inventory:CombineStack')
+AddEventHandler('esx_inventory:CombineStack', function(data)
     playPickupOrDropAnimation(data)
     playStealOrSearchAnimation(data)
 end)
 
-RegisterNetEvent("esx_inventory:SwapItems")
-AddEventHandler("esx_inventory:SwapItems", function(data)
+RegisterNetEvent('esx_inventory:SwapItems')
+AddEventHandler('esx_inventory:SwapItems', function(data)
     playPickupOrDropAnimation(data)
     playStealOrSearchAnimation(data)
 end)

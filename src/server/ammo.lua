@@ -1,9 +1,9 @@
 Citizen.CreateThread(function()
     Citizen.Wait(0)
 
-    for k, v in pairs(Config.Ammo) do
-        ESX.RegisterUsableItem(v.name, function(source)
-            TriggerClientEvent('esx_inventory:useAmmoItem', source, v)
+    for _, itemAmmo in pairs(Config.Ammo) do
+        ESX.RegisterUsableItem(itemAmmo.name, function(source)
+            TriggerClientEvent('esx_inventory:useAmmoItem', source, itemAmmo)
         end)
     end
 end)

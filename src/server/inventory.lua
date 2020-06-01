@@ -6,6 +6,7 @@ AddEventHandler('esx_inventory:openInventory', function(inventory)
     if openInventory[inventory.owner] == nil then
         openInventory[inventory.owner] = {}
     end
+
     openInventory[inventory.owner][source] = true
 end)
 
@@ -14,6 +15,7 @@ AddEventHandler('esx_inventory:closeInventory', function(inventory)
     if openInventory[inventory.owner] == nil then
         openInventory[inventory.owner] = {}
     end
+
     if openInventory[inventory.owner][source] then
         openInventory[inventory.owner][source] = nil
     end
@@ -42,10 +44,13 @@ function dumpInventory(inventory)
     end
 end
 
-RegisterServerEvent("esx_inventory:MoveToEmpty")
-AddEventHandler("esx_inventory:MoveToEmpty", function(data)
+RegisterServerEvent('esx_inventory:MoveToEmpty')
+AddEventHandler('esx_inventory:MoveToEmpty', function(data)
+    print('esx_inventory:MoveToEmpty | Data: ' .. json.encode(data))
+
     local source = source
     handleWeaponRemoval(data, source)
+
     if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
         local originInvHandler = InvType[data.originTier.name]
         originInvHandler.applyToInventory(data.originOwner, function(inventory)
@@ -56,11 +61,12 @@ AddEventHandler("esx_inventory:MoveToEmpty", function(data)
     else
         local originInvHandler = InvType[data.originTier.name]
         local destinationInvHandler = InvType[data.destinationTier.name]
+
         if data.originTier.name == 'shop' then
             local player = ESX.GetPlayerFromIdentifier(data.destinationOwner)
             if player.getMoney() >= data.originItem.price * data.originItem.qty then
-                local deletemoney = data.originItem.price * data.originItem.qty
-                player.removeInventoryItem("cash", deletemoney)
+                local deleteMoney = data.originItem.price * data.originItem.qty
+                player.removeInventoryItem('cash', deleteMoney)
                 --player.removeMoney(data.originItem.price * data.originItem.qty)       
             else
                 TriggerClientEvent('esx_inventory:refreshInventory', source)
@@ -76,6 +82,16 @@ AddEventHandler("esx_inventory:MoveToEmpty", function(data)
 
         originInvHandler.applyToInventory(data.originOwner, function(originInventory)
             destinationInvHandler.applyToInventory(data.destinationOwner, function(destinationInventory)
+                if data.destinationTier.name == 'player' then
+                    print('data.destinationTier.name == player | Data: ' .. json.encode(originInventory[tostring(data.originSlot)]))
+
+                    if originInventory[tostring(data.originSlot)].pickupId then
+                        local pickupId = originInventory[tostring(data.originSlot)].pickupId
+                        ESX.RemovePickup(pickupId)
+                        originInventory[tostring(data.originSlot)].pickupId = nil
+                    end
+                end
+
                 destinationInventory[tostring(data.destinationSlot)] = originInventory[tostring(data.originSlot)]
                 originInventory[tostring(data.originSlot)] = nil
 
@@ -92,6 +108,7 @@ AddEventHandler("esx_inventory:MoveToEmpty", function(data)
                     TriggerEvent('esx_inventory:notifyImpendingAddition', data.originItem, data.originItem.qty, destinationPlayer.source)
                     destinationPlayer.addInventoryItem(data.originItem.id, data.originItem.qty)
                 end
+
                 TriggerEvent('esx_inventory:refreshInventory', data.originOwner)
                 TriggerEvent('esx_inventory:refreshInventory', data.destinationOwner)
             end)
@@ -99,11 +116,13 @@ AddEventHandler("esx_inventory:MoveToEmpty", function(data)
     end
 end)
 
-RegisterServerEvent("esx_inventory:SwapItems")
-AddEventHandler("esx_inventory:SwapItems", function(data)
-    local source = source
+RegisterServerEvent('esx_inventory:SwapItems')
+AddEventHandler('esx_inventory:SwapItems', function(data)
+    print('esx_inventory:SwapItems | Data: ' .. json.encode(data))
 
+    local source = source
     handleWeaponRemoval(data, source)
+
     if data.originTier.name == 'shop' then
         TriggerEvent('esx_inventory:refreshInventory', data.originOwner)
         TriggerEvent('esx_inventory:refreshInventory', data.destinationOwner)
@@ -160,17 +179,19 @@ AddEventHandler("esx_inventory:SwapItems", function(data)
     end
 end)
 
-RegisterServerEvent("esx_inventory:CombineStack")
-AddEventHandler("esx_inventory:CombineStack", function(data)
-    local source = source
+RegisterServerEvent('esx_inventory:CombineStack')
+AddEventHandler('esx_inventory:CombineStack', function(data)
+    print('esx_inventory:CombineStack | Data: ' .. json.encode(data))
 
+    local source = source
     handleWeaponRemoval(data, source)
+
     if data.originTier.name == 'shop' then
         local player = ESX.GetPlayerFromIdentifier(data.destinationOwner)
         if player.getMoney() >= data.originItem.price * data.originQty then
             --player.removeMoney(data.originItem.price * data.originQty)
-            local deletemoney = data.originItem.price * data.originQty
-            player.removeInventoryItem("cash", deletemoney)
+            local deleteMoney = data.originItem.price * data.originQty
+            player.removeInventoryItem('cash', deleteMoney)
         else
             TriggerClientEvent('esx_inventory:refreshInventory', source)
             TriggerClientEvent('esx_inventory:refreshInventory', data.target)
@@ -220,17 +241,19 @@ AddEventHandler("esx_inventory:CombineStack", function(data)
     end
 end)
 
-RegisterServerEvent("esx_inventory:TopoffStack")
-AddEventHandler("esx_inventory:TopoffStack", function(data)
-    local source = source
+RegisterServerEvent('esx_inventory:TopoffStack')
+AddEventHandler('esx_inventory:TopoffStack', function(data)
+    print('esx_inventory:TopoffStack | Data: ' .. json.encode(data))
 
+    local source = source
     handleWeaponRemoval(data, source)
+
     if data.originTier.name == 'shop' then
         local player = ESX.GetPlayerFromIdentifier(data.destinationOwner)
         if player.getMoney() >= data.originItem.price * data.originQty then
             --player.removeMoney(data.originItem.price * data.originQty)
-            local deletemoney = data.originItem.price * data.originQty
-            player.removeInventoryItem("cash", deletemoney)
+            local deleteMoney = data.originItem.price * data.originQty
+            player.removeInventoryItem('cash', deleteMoney)
             
         else
             TriggerClientEvent('esx_inventory:refreshInventory', source)
@@ -281,15 +304,19 @@ AddEventHandler("esx_inventory:TopoffStack", function(data)
     end
 end)
 
-RegisterServerEvent("esx_inventory:EmptySplitStack")
-AddEventHandler("esx_inventory:EmptySplitStack", function(data)
+RegisterServerEvent('esx_inventory:EmptySplitStack')
+AddEventHandler('esx_inventory:EmptySplitStack', function(data)
+    print('esx_inventory:EmptySplitStack | Data: ' .. json.encode(data))
+
+    local source = source
     handleWeaponRemoval(data, source)
+
     if data.originTier.name == 'shop' then
         local player = ESX.GetPlayerFromIdentifier(data.destinationOwner)
         if player.getMoney() >= data.originItem.price * data.moveQty then
            --player.removeMoney(data.originItem.price * data.moveQty)
-           local deletemoney = data.originItem.price * data.moveQty
-           player.removeInventoryItem("cash", deletemoney)
+           local deleteMoney = data.originItem.price * data.moveQty
+           player.removeInventoryItem('cash', deleteMoney)
         else
             TriggerClientEvent('esx_inventory:refreshInventory', source)
             TriggerClientEvent('esx_inventory:refreshInventory', data.target)
@@ -303,7 +330,6 @@ AddEventHandler("esx_inventory:EmptySplitStack", function(data)
         return
     end
 
-    local source = source
     if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
         local originInvHandler = InvType[data.originTier.name]
 
@@ -313,7 +339,7 @@ AddEventHandler("esx_inventory:EmptySplitStack", function(data)
             inventory[tostring(data.destinationSlot)] = {
                 name = item.name,
                 count = data.moveQty
-            }        
+            }
             TriggerEvent('esx_inventory:refreshInventory', data.originOwner)
         end)
     else
@@ -341,6 +367,7 @@ AddEventHandler("esx_inventory:EmptySplitStack", function(data)
                     TriggerEvent('esx_inventory:notifyImpendingAddition', data.originItem, data.moveQty, destinationPlayer.source)
                     destinationPlayer.addInventoryItem(data.originItem.id, data.moveQty)
                 end
+
                 TriggerEvent('esx_inventory:refreshInventory', data.originOwner)
                 TriggerEvent('esx_inventory:refreshInventory', data.destinationOwner)
             end)
@@ -348,8 +375,10 @@ AddEventHandler("esx_inventory:EmptySplitStack", function(data)
     end
 end)
 
-RegisterServerEvent("esx_inventory:SplitStack")
-AddEventHandler("esx_inventory:SplitStack", function(data)
+RegisterServerEvent('esx_inventory:SplitStack')
+AddEventHandler('esx_inventory:SplitStack', function(data)
+    print('esx_inventory:SplitStack | Data: ' .. json.encode(data))
+
     local source = source
     handleWeaponRemoval(data, source)
 
@@ -357,8 +386,8 @@ AddEventHandler("esx_inventory:SplitStack", function(data)
         local player = ESX.GetPlayerFromIdentifier(data.destinationOwner)
         if player.getMoney() >= data.originItem.price * data.moveQty then
             --player.removeMoney(data.originItem.price * data.moveQty)
-            local deletemoney = data.originItem.price * data.moveQty
-            player.removeInventoryItem("cash", deletemoney)
+            local deleteMoney = data.originItem.price * data.moveQty
+            player.removeInventoryItem('cash', deleteMoney)
         else
             TriggerClientEvent('esx_inventory:refreshInventory', source)
             TriggerClientEvent('esx_inventory:refreshInventory', data.target)
@@ -400,6 +429,7 @@ AddEventHandler("esx_inventory:SplitStack", function(data)
                     TriggerEvent('esx_inventory:notifyImpendingAddition', data.originItem, data.moveQty, destinationPlayer.source)
                     destinationPlayer.addInventoryItem(data.originItem.id, data.moveQty)
                 end
+
                 TriggerEvent('esx_inventory:refreshInventory', data.originOwner)
                 TriggerEvent('esx_inventory:refreshInventory', data.destinationOwner)
             end)
@@ -464,6 +494,7 @@ function AttemptMerge(item, inventory, count)
     if max == -1 then
         max = 2147483647
     end
+
     for k, v in pairs(inventory) do
         if v.name == item.name then
             if v.count + count > max then
@@ -486,6 +517,7 @@ function AddToEmpty(item, type, inventory, count)
     if max == -1 then
         max = 2147483647
     end
+
     for i = 1, InvType[type].slots, 1 do
         if inventory[tostring(i)] == nil then
             if count > max then
@@ -500,18 +532,22 @@ function AddToEmpty(item, type, inventory, count)
             end
         end
     end
+
     print('Inventory Overflow!')
     return 0
 end
 
 function createDisplayItem(item, esxItem, slot, price, type)
+    print('createDisplayItem | Item: ' .. json.encode(item))
     local max = getItemsInfo(item.name, 'limit') or 2147483647
     if max == -1 then
         max = 2147483647
     end
+
     return {
         id = esxItem.name,
         itemId = esxItem.name,
+        pickupId = item.pickupId or nil,
         qty = item.count,
         slot = slot,
         label = esxItem.label,
@@ -520,7 +556,7 @@ function createDisplayItem(item, esxItem, slot, price, type)
         stackable = true,
         unique = esxItem.rare,
         usable = esxItem.usable,
-        giveable = true,
+        giveAble = true,
         description = getItemsInfo(esxItem.name, 'description'),
         weight = getItemsInfo(esxItem.name, 'weight') or 0,
         metadata = {},
@@ -528,7 +564,7 @@ function createDisplayItem(item, esxItem, slot, price, type)
         canRemove = esxItem.canRemove,
         price = price or 0,
         needs = false,
-        closeUi = getItemDataProperty(esxItem.name, 'closeOnUse'),
+        closeUi = getItemDataProperty(esxItem.name, 'closeOnUse')
     }
 end
 
@@ -545,6 +581,7 @@ ESX.RegisterServerCallback('esx_inventory:getSecondaryInventory', function(sourc
         print('ERROR FINDING INVENTORY TYPE:' .. type)
         return
     end
+
     InvType[type].getDisplayInventory(identifier, cb, source)
 end)
 
@@ -555,25 +592,26 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterCommand('saveInventories', function(src, args, raw)
-    if src == 0 then
-        saveInventories()
-    end
-end)
+ESX.RegisterCommand('saveInventories', 'admin', function(xPlayer, args, showError)
+    saveInventories()
+end, true, {help = _U('saveInventories')})
 
 function saveInventories()
+    local totalSavedInventories = 0
     for type, inventories in pairs(loadedInventories) do
         for identifier, inventory in pairs(inventories) do
             if inventory ~= nil then
                 if table.length(inventory) > 0 then
                     saveLoadedInventory(identifier, type, inventory)
+                    totalSavedInventories = totalSavedInventories + 1
                 else
                     deleteInventory(identifier, type)
                 end
             end
         end
     end
-    RconPrint('[Disc-InventoryHud][SAVED] All Inventories' .. "\n")
+
+    print(('[esx_inventory] [^2INFO^7] Saved %s inventory(ies)'):format(totalSavedInventories))
 end
 
 function saveInventory(identifier, type)
@@ -582,14 +620,26 @@ end
 
 function saveLoadedInventory(identifier, type, data)
     if table.length(data) > 0 then
-        MySQL.Async.execute('UPDATE inventories SET data = @data WHERE owner = @owner AND type = @type', {
+        local newData = {}
+        for k, v in pairs(data) do
+            newData[k] = {
+                name = v.name,
+                count = v.count
+            }
+        end
+
+        print('saveLoadedInventory | Data: ' .. json.encode(data))
+        print('saveLoadedInventory | Data: ' .. json.encode(newData))
+
+        MySQL.Async.execute('UPDATE inventories SET data=@data WHERE owner=@owner AND type=@type', {
             ['@owner'] = identifier,
             ['@type'] = type,
-            ['@data'] = json.encode(data)
+            ['@data'] = json.encode(newData)
         }, function(result)
             if result == 0 then
                 createInventory(identifier, type, data)
             end
+
             loadedInventories[type][identifier] = nil
             TriggerEvent('esx_inventory:savedInventory', identifier, type, data)
         end)
@@ -597,6 +647,7 @@ function saveLoadedInventory(identifier, type, data)
 end
 
 function createInventory(identifier, type, data)
+    print('createInventory | Identifier: ' .. json.encode(identifier) .. ' | Type: ' .. json.encode(type) .. ' | Data: ' .. json.encode(data))
     MySQL.Async.execute('INSERT INTO inventories (owner, type, data) VALUES (@owner, @type, @data)', {
         ['@owner'] = identifier,
         ['@type'] = type,
@@ -607,7 +658,7 @@ function createInventory(identifier, type, data)
 end
 
 function deleteInventory(identifier, type)
-    MySQL.Async.execute('DELETE FROM inventories WHERE owner = @owner AND type = @type', {
+    MySQL.Async.execute('DELETE FROM inventories WHERE owner=@owner AND type=@type', {
         ['@owner'] = identifier,
         ['@type'] = type
     }, function()
@@ -625,11 +676,12 @@ function getDisplayInventory(identifier, type, cb, source)
                 local esxItem = player.getInventoryItem(v.name)
                 local item = createDisplayItem(v, esxItem, tonumber(k))
                 item.usable = false
-                item.giveable = false
+                item.giveAble = false
                 item.canRemove = false
                 table.insert(itemsObject, item)
             end
         end
+
         local inv
         if type == 'player' then
             local targetPlayer = ESX.GetPlayerFromIdentifier(identifier)
@@ -661,15 +713,19 @@ function getInventory(identifier, type, cb)
     end
 end
 
-function applyToInventory(identifier, type, f)
+function applyToInventory(identifier, type, invFunction)
+    print('applyToInventory | Identifier: ' .. json.encode(identifier) .. ' | Type: ' .. json.encode(type))
+
     if loadedInventories[type][identifier] ~= nil then
-        f(loadedInventories[type][identifier])
+        invFunction(loadedInventories[type][identifier])
     else
         loadInventory(identifier, type, function()
-            applyToInventory(identifier, type, f)
+            applyToInventory(identifier, type, invFunction)
         end)
     end
+
     if loadedInventories[type][identifier] and table.length(loadedInventories[type][identifier]) > 0 then
+        print('loadedInventories | Identifier: ' .. json.encode(identifier) .. ' | Type: ' .. json.encode(type) .. ' | Inventory: ' .. json.encode(loadedInventories[type][identifier]))
         TriggerEvent('esx_inventory:modifiedInventory', identifier, type, loadedInventories[type][identifier])
     else
         TriggerEvent('esx_inventory:modifiedInventory', identifier, type, nil)
@@ -686,9 +742,14 @@ function loadInventory(identifier, type, cb)
             cb({})
             return
         end
+
         inventory = json.decode(result[1].data)
         loadedInventories[type][identifier] = inventory
-        cb(inventory)
+
+        if cb then
+            cb(inventory)
+        end
+
         TriggerEvent('esx_inventory:loadedInventory', identifier, type, inventory)
     end)
 end

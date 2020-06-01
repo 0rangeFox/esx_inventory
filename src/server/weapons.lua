@@ -12,7 +12,7 @@ end)
 RegisterServerEvent('esx_inventory:updateAmmoCount')
 AddEventHandler('esx_inventory:updateAmmoCount', function(hash, count)
     local player = ESX.GetPlayerFromId(source)
-    MySQL.Async.execute('UPDATE ammos SET count = @count WHERE hash = @hash AND owner = @owner', {
+    MySQL.Async.execute('UPDATE ammos SET count=@count WHERE hash=@hash AND owner=@owner', {
         ['@owner'] = player.identifier,
         ['@hash'] = hash,
         ['@count'] = count

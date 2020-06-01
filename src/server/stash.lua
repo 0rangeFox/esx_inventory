@@ -3,6 +3,6 @@ Citizen.CreateThread(function()
         name = 'stash',
         label = _U('stash'),
         slots = 650,
-        maxweight = Config.StashMaxWeight
+        maxWeight = Config.StashMaxWeight
     })
 end)

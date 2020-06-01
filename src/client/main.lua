@@ -42,10 +42,6 @@ RegisterNUICallback('NUIFocusOff', function(data)
     closeInventory()
 end)
 
-RegisterCommand('closeinv', function(source, args, raw)
-    closeInventory()
-end)
-
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)

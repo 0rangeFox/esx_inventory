@@ -4,7 +4,7 @@ Citizen.CreateThread(function()
             name = 'trunk-' .. string.upper(k),
             label = k,
             slots = v,
-            maxweight = Config.VehicleWeight2[k]
+            maxWeight = Config.VehicleWeight2[k]
         })
     end
     for k,v in pairs(Config.VehicleSlot) do
@@ -12,7 +12,7 @@ Citizen.CreateThread(function()
             name = 'trunk-' .. k,
             label = _U('trunk') .. k,
             slots = v,
-            maxweight = Config.VehicleWeight[k]
+            maxWeight = Config.VehicleWeight[k]
         })
     end
 end)
