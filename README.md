@@ -5,29 +5,26 @@
 # Description
 Adds the following features
 
-- Inventory Hud with Slots
-[![Image from Gyazo](https://i.gyazo.com/08082a66b8da85aee146d1ed64f36fb4.png)](https://gyazo.com/08082a66b8da85aee146d1ed64f36fb4)
-[![Image from Gyazo](https://i.gyazo.com/e00dd9c44cac5fd5b20ef59f0647ffc8.jpg)](https://gyazo.com/e00dd9c44cac5fd5b20ef59f0647ffc8)
-- Drops with HUD
-[![Image from Gyazo](https://i.gyazo.com/51b7d1f95254bdc9acf2b77d1683ef19.png)](https://gyazo.com/51b7d1f95254bdc9acf2b77d1683ef19)
-[![Image from Gyazo](https://i.gyazo.com/76abd2c0f5e65daa5e6504507e25a90e.jpg)](https://gyazo.com/76abd2c0f5e65daa5e6504507e25a90e)
-- Pay with HUD
-- Give with HUD
-- Hot keys 1 - 5
-- Shops with HUD
-[![Image from Gyazo](https://i.gyazo.com/9dbd4621c463b2e71c7e9e4edeec7057.jpg)](https://gyazo.com/9dbd4621c463b2e71c7e9e4edeec7057)
-- Trunks with HUD
-[![Image from Gyazo](https://i.gyazo.com/6cf05119320210ae1df929f0803515bc.jpg)](https://gyazo.com/6cf05119320210ae1df929f0803515bc)
-- Glovebox with HUD
-[![Image from Gyazo](https://i.gyazo.com/2ed7a9365c5f8ec52be3ed3a16abb493.jpg)](https://gyazo.com/2ed7a9365c5f8ec52be3ed3a16abb493)
+- Inventory HUD
+[![Image from Imgur](https://i.imgur.com/UZSpzfD.png)](https://imgur.com/a/ZWKonJ6)
+[![Image from Imgur](https://i.imgur.com/Zp6XcIC.png)](https://imgur.com/a/ZWKonJ6)
+- Drops HUD
+[![Image from Imgur](https://i.imgur.com/E8EH6sE.png)](https://imgur.com/a/ZWKonJ6)
+[![Image from Imgur](https://i.imgur.com/BhQ3uua.png)](https://imgur.com/a/ZWKonJ6)
+- Shops HUD
+[![Image from Imgur](https://i.imgur.com/498U5K7.png)](https://imgur.com/a/ZWKonJ6)
+- Glovebox HUD
+[![Image from Imgur](https://i.imgur.com/49D5kJG.png)](https://imgur.com/a/ZWKonJ6)
+- Trunks HUD
+[![Image from Imgur](https://i.imgur.com/NPD7sx0.png)](https://imgur.com/a/ZWKonJ6)
+[![Image from Imgur](https://i.imgur.com/XRbZsF1.png)](https://imgur.com/a/ZWKonJ6)
 - Weapons as Items
-[![Image from Gyazo](https://i.gyazo.com/94fb987ed7e683a56188ce96b5b643b3.jpg)](https://gyazo.com/94fb987ed7e683a56188ce96b5b643b3)
+[![Image from Imgur](https://i.imgur.com/JT68wpV.png)](https://imgur.com/a/ZWKonJ6)
 
 # Explanation
-
 ## Weapons as Items
 Weapons are read from the `items` table with the prefix `WEAPON_`. Add all usable weapons into the `items` table with their limit.
-Ammo for each weapon is stored in `ammos` table however I do not support addition of ammo yet.
+Ammo for each weapon is stored in `ammos` with amount of bullets, Ammos are read from the `items` table with the prefix `AMMO_`. Add all usable ammos into the `items` table with their limit and the use of ammo can be configurable on `config.lua`.
 
 ## Hotbar Keys
 The weapon wheel is disabled for the use of hot keys. Weapons being used as items is needed in this case
@@ -51,7 +48,7 @@ The source CSS is written in SASS, which is a superset of the CSS3 syntax. Compi
 ```JSON
 "liveSassCompile.settings.formats":[{
         "format": "compressed",
-        "extensionName": ".min.css",
+        "extensionName": ".css",
         "savePath": "~/../"
     },
 ]

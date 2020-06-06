@@ -1,6 +1,6 @@
-$primary: #414141;
+$primary: #414141; //rgba(20, 11, 20, 0.75)
 $accent: #9d9d9d;
-$border: #666666;
+$border: #0d0d0d; //rgba(255,255,255,0.1)
 
 $scroll-thumb: rgba(255, 255, 255, 0.38);
 $scroll-background: transparent;
@@ -23,5 +23,7 @@ $slot-used: rgba(0, 0, 0, 0.75);
 
 $hotkey-text: #ffffff;
 $hotkey-background: #2c2c2c;
-$item-name-background: rgba(41, 41, 41, 0.83);
+
+$item-name-background: rgba(0, 0, 0, 0.30);
 $item-name-text: #ffffff;
+$item-price-background: rgba(30, 255, 0, 0.7);

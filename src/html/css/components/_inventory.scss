@@ -5,35 +5,35 @@
     text-transform: none;
     color: white;
     text-shadow:
-        -0.5px -0.5px 0 #000,
-        0.5px -0.5px 0 #000,
-        -0.5px 0.5px 0 #000,
-        0.5px 0.5px 0 #000;
+            -0.5px -0.5px 0 #000,
+            0.5px -0.5px 0 #000,
+            -0.5px 0.5px 0 #000,
+            0.5px 0.5px 0 #000;
 }
 
 body {
-	background-color: transparent !important;
+    background-color: transparent !important;
     overflow: hidden;
 
     .ui {
         position: relative;
-        left: 0;
-        top: 0;
-        width: 100vw;
-        height: 100vh;
+        left: 5vw;
+        top: 5vh;
+        width: 90vw;
+        height: 90vh;
         background-color: $ui-background;
         z-index: 0;
         overflow: hidden;
         display: none;
-        
+
         .inv-log {
             height: 15%;
             width: 34%;
             position: absolute;
             bottom: 1%;
-            left: 2.5%;
-            text-align: left;
-            box-shadow: 1px 1px 57px rgba(0, 0, 0, .4);
+            right: 2.5%;
+            text-align: right;
+            box-shadow: 1px 1px 57px rgba(0, 0, 0, 0.0);
             background-color: $inv-background;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -42,19 +42,24 @@ body {
             color: $accent;
             font-size: 10px;
         }
-        
+
         .close-ui {
-            padding: 25px;
-            float: right;
-            font-size: 35px;
+            text-align: center;
+            padding: 10px;
             color: $primary;
-        
+            background-color: rgba(75, 0, 0, 0.75);
+            width: 100%;
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            transform: translate(-50%, -50%);
+
             &:hover {
                 filter: brightness(0.75);
                 transition: all ease-in 0.15s;
             }
         }
-        
+
         .inventory {
             position: absolute;
             left: 50%;
@@ -64,24 +69,22 @@ body {
             min-width: 95%;
             max-width: 95%;
             height: 65%;
-            box-shadow: 1px 1px 57px rgba(0, 0, 0, .4);
+            box-shadow: 1px 1px 57px rgba(0, 0, 0, 0.0);
             background-color: $inv-background;
-        
+
             .inventory-wrapper {
                 display: inline-block;
                 height: 100%;
-                width: 35%;
+                width: 40%;
                 overflow: visible;
                 position: absolute;
                 left: 0;
-
-                
 
                 &:last-child {
                     right: 0;
                     left: auto;
                 }
-        
+
                 #inventoryOne, #inventoryTwo {
                     height: 100%;
                     overflow-y: auto;
@@ -93,29 +96,29 @@ body {
                     min-width: 100.5%;
                     grid-auto-rows: 20%;
 
+                    // TODO É pra existir?
                     &.disabled {
                         filter: brightness(0.25);
                         transition: filter ease-in 0.15s;
-                      }
+                    }
 
                 }
-                
 
                 .inv-label{
-                    font-size: 25px;
+                    font-size: 14px;
                     width: 100%;
                 }
-                
+
                 .inv-id  {
                     text-align: left;
-                    font-size: 12px;
+                    font-size: 18px;
                 }
-                
+
                 .inv-slots {
                     position: absolute;
                     bottom: 0;
                 }
-        
+
                 .left-data {
                     width: 100%;
                     display: flex;
@@ -126,21 +129,20 @@ body {
                     flex-direction: row-reverse;
                     flex-wrap: wrap;
                     justify-content: flex-end;
-                
+
                     .inv-id {
                         text-align: left;
                     }
-                
+
                     .inv-slots {
                         right: 0;
                     }
-                    
-            
+
                     .inv-weight{
                         text-align: center;
                     }
                 }
-                
+
                 .right-data {
                     width: 100%;
                     display: flex;
@@ -152,85 +154,63 @@ body {
                     flex-wrap: wrap;
                     right: 0;
                     justify-content: flex-start;
-                
+
                     .inv-label {
-                        text-align: right;
+                        text-align: left;
                     }
-                
-                    .inv-slots {
+
+                    .inv-id {
                         left: 0;
+                        margin-right: auto;
+                    }
+
+                    .inv-slots {
+                        right: 0;
                         margin-right: auto;
                     }
                 }
             }
-        
+
             #controls {
                 display: inline-block;
-                width: 30%;
+                width: 20%;
                 height: 100%;
                 position: absolute;
                 left: 0;
                 right: 0;
                 margin-left: auto;
                 margin-right: auto;
-        
+                border: 0px solid $accent;
+
                 .info-div {
                     text-align: center;
                     padding: 10px;
                     background-color: $primary;
-                    width: 30%;
+                    width: 50%;
                     position: absolute;
-                    left: 28%;
+                    left: 50%;
                     top: 15%;
-                    transform: translate(-50%, -50%);                        
-                    border: 2px solid $border;
-                    border-radius: 5px;
-        
-                    .ammoIcon {
-                        width: 10px;
-                        height: 10px;
-                    }
-                    
-                    .moneyIcon {
-                        width: 15px;
-                        height: 15px;
-                    }
-                }
+                    transform: translate(-50%, -50%);
+                    border: 0px solid $border;
 
-                .second-info-div {
-                    text-align: center;
-                    padding: 10px;
-                    background-color: $primary;
-                    width: 30%;
-                    position: absolute;
-                    right: 0%;
-                    top: 15%;
-                    transform: translate(-50%, -50%);                        
-                    border: 2px solid $border;
-                    border-radius: 5px;
-        
                     .ammoIcon {
                         width: 10px;
                         height: 10px;
-                    }
-                    
-                    .moneyIcon {
-                        width: 15px;
-                        height: 15px;
                     }
                 }
 
                 .hidden {
                     display: none;
                 }
-        
+
                 .controls-div {
                     position: absolute;
-                    left: 28%;
-                    top: 45%;
+                    left: 50%;
+                    top: 50%;
                     transform: translate(-50%, -50%);
-                    width: 30%;
-                
+                    width: 50%;
+                    border: 0px solid $border;
+
                     .control {
                         width: 100%;
                         height: 40px;
@@ -239,67 +219,29 @@ body {
                         text-align: center;
                         vertical-align: middle;
                         line-height: 40px;
-                        border: 2px solid $border;
-                        border-radius: 5px;
+                        border: 0px solid $border;
 
                         &:last-child {
                             margin-bottom: 0;
                         }
-                    
+
                         &.hover {
                             transition: all ease-in 0.15s;
                             filter: brightness(60%);
                         }
-                    
+
                         &.disabled {
-                            background-color: $disabled-control;
+                            background-color: $disabled-control !important; //rgba(54, 54, 54, 0.81)
                             transition: all ease-in 0.15s;
                         }
                     }
+
                     #count {
                         outline: none;
                         font-size: 18px;
                     }
                 }
 
-                .money-controls-div {
-                    position: absolute;
-                    right: 0%;
-                    top: 37%;
-                    transform: translate(-50%, -50%);
-                    width: 30%;
-                
-                    .control {
-                        width: 100%;
-                        height: 40px;
-                        background-color: $primary;
-                        margin-bottom: 10px;
-                        text-align: center;
-                        vertical-align: middle;
-                        line-height: 40px;
-                        border: 2px solid $border;
-                        border-radius: 5px;
-
-                        &:last-child {
-                            margin-bottom: 0;
-                        }
-                    
-                        &.hover {
-                            transition: all ease-in 0.15s;
-                            filter: brightness(60%);
-                        }
-                    
-                        &.disabled {
-                            background-color: $disabled-control;
-                            transition: all ease-in 0.15s;
-                        }
-                    }
-                    #count {
-                        outline: none;
-                        font-size: 18px;
-                    }
-                }
-        
                 .tooltip-div, .weight-div {
                     display: none;
                     text-align: center;
@@ -312,25 +254,25 @@ body {
                     transform: translate(-50%, -50%);
                     border: 2px solid $border;
                     border-radius: 5px;
-                
+
                     hr {
                         border: none;
                         border-bottom: 1px solid rgba(0, 0, 0, 0.5);
                         margin: 10px;
                     }
-                
+
                     .tooltip-name {
                         font-size: 15px;
                     }
-                
+
                     .tooltip-uniqueness, .tooltip-meta {
                         font-size: 10px;
-                
+
                         .meta-key, .meta-val {
                             display: inline-block;
                         }
                     }
-                    
+
                     .tooltip-desc {
                         font-size: 10px;
                     }
@@ -339,21 +281,20 @@ body {
                         font-size: 10px;
                     }
                 }
-        
-                
             }
         }
-        
+
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
-        
+
         input[type=number] {
             -moz-appearance: textfield;
+            border: 0px solid #b3b6bb;
         }
-        
+
         .slot {
             float: left;
             background-color: $slot;
@@ -362,65 +303,70 @@ body {
             transition: filter ease-in 0.15s;
             overflow: hidden;
 
+            &.search-non-match {
+                opacity: 0.25;
+                background-color: rgba(255, 0, 0, 0.25);
+                -webkit-transition: opacity ease-in 0.1s;
+                transition: opacity ease-in 0.1s border 0px solid $accent;
+            }
 
-        
             &.slot-template {
                 display: none;
             }
-        
+
             &:hover {
                 filter: brightness(0.6);
                 // background-color: rgba(0, 0, 0, 0.664);
             }
-            
+
             &.temporary {
-                background-color: $slot-temporary;
-        
+                background-color: $slot-temporary !important;
+
                 // &:hover {
                 //     background-color: rgba(26, 0, 0, 0.664) !important;
                 // }
             }
-        
+
             &.storage {
-                background-color: $slot-storage;
-        
+                background-color: $slot-storage !important;
+
                 // &:hover {
                 //     background-color: rgba(0, 4, 26, 0.664) !important;
                 // }
             }
-        
+
             &.evidence {
-                background-color: $slot-evidence;
-        
+                background-color: $slot-evidence !important;
+
                 // &:hover {
                 //     background-color: rgba(26, 18, 0, 0.664) !important;
                 // }
             }
-        
+
             &.player {
-                background-color: $slot-player;
-        
+                background-color: $slot-player !important;
+
                 // &:hover {
                 //     background-color: rgba(26, 0, 26, 0.664) !important;
                 // }
             }
-        
+
             &.store {
-                background-color: $slot-player;
-        
+                background-color: $slot-player !important;
+
                 // &:hover {
                 //     background-color: rgba(26, 0, 26, 0.664) !important;
                 // }
             }
-        
+
             &.orig-dragging {
                 background-color: $slot-dragging !important;
             }
-        
+
             &.error {
                 background-color: $slot-error;
             }
-        
+
             &.dragging {
                 background-color: transparent !important;
                 border: none !important;
@@ -428,30 +374,30 @@ body {
                 .item {
                     min-width: 135px !important;
                 }
-        
+
                 .item-name {
                     background-color: transparent !important;
                     border-top: none !important;
                 }
-        
+
                 .item-count {
                     display: none !important;
                 }
-            
+
                 .item-keybind {
                     display: none !important;
                 }
             }
-        
+
             .item,
             .item-other {
                 width: 100%;
-                min-width: 100%;
-                height: 150px;
-                background-size: 70%;
+                min-width: 50%;
+                height: 80px;
+                background-size: 80%;
                 background-repeat: no-repeat;
                 background-position: center center;
-        
+
                 .item-keybind {
                     position: absolute;
                     text-align: center;
@@ -466,7 +412,7 @@ body {
                     border-right: 1px solid $border;
                     border-bottom: 1px solid $border;
                 }
-                
+
                 .item-name {
                     position: absolute;
                     bottom: 0;
@@ -482,9 +428,10 @@ body {
                     color: $item-name-text;
                     font-weight: 200;
                 }
-                
+
                 .item-count {
                     position: absolute;
+                    font-size: 12px;
                     top: 0;
                     text-align: right;
                     right: 5px;
@@ -499,26 +446,26 @@ body {
                     left: 5px;
                     height: 20px;
                     z-index: 500;
-                    color: rgba(30, 255, 0, 0.70)
+                    color: $item-price-background;
                 }
             }
         }
-        
+
         .inventory-wrapper::-webkit-scrollbar-track, #inventoryOne::-webkit-scrollbar-track, #inventoryTwo::-webkit-scrollbar-track, #debugDiv::-webkit-scrollbar-track {
             background-color: none;
             border: none;
         }
-        
+
         .inventory-wrapper::-webkit-scrollbar, #inventoryOne::-webkit-scrollbar, #inventoryTwo::-webkit-scrollbar, #debugDiv::-webkit-scrollbar {
-            width: 10px;
+            width: 5px;
             background-color: $scroll-background;
         }
-        
+
         .inventory-wrapper::-webkit-scrollbar-thumb, #inventoryOne::-webkit-scrollbar-thumb, #inventoryTwo::-webkit-scrollbar-thumb, #debugDiv::-webkit-scrollbar-thumb {
             background-color: $scroll-thumb;
             border: 2px solid $scroll-thumb;
         }
-        
+
         .nearbyPlayerButton {
             width: 100%;
             margin-top: 5px;
@@ -534,16 +481,13 @@ body {
             text-align: center;
             line-height: 30px;
             border: none;
-        
+
             &:hover {
                 background-color: rgba(46, 29, 29, 0.8);
             }
         }
-        
-        .money {
-            padding: 3px;
-        }
     }
+
     .near-players-wrapper {
         position: absolute;
         left: 0;
@@ -554,7 +498,7 @@ body {
         z-index: 0;
         overflow: hidden;
         display: none;
-    
+
         .near-players-list {
             width: 500px;
             height: fit-content;
@@ -567,17 +511,17 @@ body {
             margin: auto;
             border: 1px solid $border;
             z-index: 1000;
-    
+
             .popup-header {
                 background: rgba(0, 0, 0, 0.75);
                 border-bottom: 1px solid $border;
-    
+
                 .popup-header-text {
                     display: inline-block;
                     width: 90%;
                     padding: 10px;
                 }
-    
+
                 .exit-popup {
                     display: inline-block;
                     width: fit-content;
@@ -586,36 +530,36 @@ body {
                     width: 10%;
                     text-align: right;
                     color: $accent;
-    
+
                     &:hover {
                         transition: all ease-in 0.15s;
                         filter: brightness(0.7);
                     }
                 }
             }
-    
+
             .popup-body {
                 padding: 5px;
                 max-height: 660px;
                 overflow-y: auto;
                 overflow-x: hidden;
-    
+
                 &::-webkit-scrollbar-track {
                     background-color: none;
                     border: none;
                 }
-    
+
                 &::-webkit-scrollbar {
                     width: 10px;
                     background-color: $scroll-background;
                 }
-    
+
                 &::-webkit-scrollbar-thumb{
                     background-color: $scroll-thumb;
                     border: 2px solid $scroll-thumb;
                 }
-    
-                .player, .cashchoice, .cashstore, .cashtake {
+
+                .player, .cashchoice {
                     width: 100%;
                     height: 50px;
                     line-height: 50px;
@@ -623,12 +567,12 @@ body {
                     background: $slot-dragging;
                     border: 1px solid $border;
                     margin-bottom: 5px;
-    
+
                     &:hover {
                         filter: brightness(0.6);
                         transition: all ease-in 0.15s;
                     }
-    
+
                     &:last-child {
                         margin-bottom: 0 !important;
                     }

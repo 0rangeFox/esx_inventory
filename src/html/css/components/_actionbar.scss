@@ -19,12 +19,12 @@
         border: 1px solid $border;
         transition: background-color ease-in 0.15s;
 
-        &.used {
-            background-color: $slot-dragging;
-        }
-
         &.empty-used {
             background-color: $slot-error;
+        }
+
+        &.used {
+            background-color: $slot-dragging;
         }
 
         .item {
@@ -61,7 +61,9 @@
                 z-index: 500;
                 font-size: 12px;
                 background-color: $item-name-background;
-                border-top: 1px solid $border;
+                border-style: solid;
+                border-color: $primary;
+                border-width: 1px 1px 1px 1px;
                 color: $item-name-text;
                 font-weight: 200;
             }

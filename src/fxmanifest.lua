@@ -53,13 +53,13 @@ server_scripts {
 
 files {
     -- Minified scripts
-    'html/js/minScripts/jquery.min.js',
-    'html/js/minScripts/jquery-ui.min.js',
-    'html/js/minScripts/bootstrap.min.js',
-    'html/js/minScripts/popper.min.js',
-    'html/css/style.min.css',
-    'html/css/jquery-ui.min.css',
-    'html/css/bootstrap.min.css',
+    'html/js/minifiedScripts/jquery.min.js',
+    'html/js/minifiedScripts/jquery-ui.min.js',
+    'html/css/minifiedStyles/jquery-ui.min.css',
+    'html/js/minifiedScripts/bootstrap.min.js',
+    'html/css/minifiedStyles/bootstrap.min.css',
+    'html/js/minifiedScripts/popper.min.js',
+    'html/css/style.css',
 
     -- Sounds
     'html/success.wav',
