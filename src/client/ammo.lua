@@ -1,13 +1,12 @@
 RegisterNetEvent('esx_inventory:useAmmoItem')
 AddEventHandler('esx_inventory:useAmmoItem', function(itemAmmo)
-    local playerPed = GetPlayerPed(-1)
+    local playerPed, found, currentWeapon = GetPlayerPed(-1), GetCurrentPedWeapon(playerPed, true)
     local weapon
 
-    local found, currentWeapon = GetCurrentPedWeapon(playerPed, true)
     if found then
-        for _, v in pairs(itemAmmo.weapons) do
-            if currentWeapon == v then
-                weapon = v
+        for _, vWeapon in pairs(itemAmmo.weapons) do
+            if currentWeapon == GetHashKey(vWeapon) then
+                weapon = vWeapon
                 break
             end
         end
@@ -24,9 +23,11 @@ AddEventHandler('esx_inventory:useAmmoItem', function(itemAmmo)
                 TriggerServerEvent('esx_inventory:updateAmmoCount', weapon, newAmmo)
                 SetPedAmmo(playerPed, weapon, newAmmo)
                 TriggerServerEvent('esx_inventory:removeAmmoItem', itemAmmo)
-                exports['mythic_notify']:SendAlert('success', 'Reloaded')
+                ESX.ShowNotification('Reloaded')
+                --exports['mythic_notify']:SendAlert('success', 'Reloaded')
             else
-                exports['mythic_notify']:SendAlert('error', 'Max Ammo')
+                ESX.ShowNotification('Max ammo')
+                --exports['mythic_notify']:SendAlert('error', 'Max Ammo')
             end
         end
     end
