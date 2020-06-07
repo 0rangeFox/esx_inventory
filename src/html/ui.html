@@ -26,7 +26,7 @@
                 <div id="controls">
                     <div class="controls-div">
                         <input class="control" id="search" type="text" placeholder="Search" />
-                        <input type="number" class="control" id="count" value="0" min='0' onClick="this.select();" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
+                        <input type="number" class="control" id="count" value="0" min='0' onClick="this.select();" onkeypress="return (event.charCode === 8 || event.charCode === 0) ? null : event.charCode >= 48 && event.charCode <= 57">
                         <div class="control" id="use">Use</div>
                         </br>
                         </br>

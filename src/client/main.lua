@@ -66,7 +66,3 @@ AddEventHandler('onResourceStop', function(resource)
         closeInventory()
     end
 end)
-
-
-
-

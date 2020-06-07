@@ -2,6 +2,10 @@ local serverDrops = {}
 local drops = {}
 
 Citizen.CreateThread(function()
+    while not ESXLoaded do
+        Citizen.Wait(10)
+    end
+
     while true do
         Citizen.Wait(1000)
         local coords = GetEntityCoords(GetPlayerPed(-1))
@@ -31,11 +35,12 @@ Citizen.CreateThread(function()
                     colour = { r = 255, b = 255, g = 255 },
                     size = vector3(0.5, 0.5, 0.5),
                 }
+
                 drops[k].active = false
-                TriggerEvent('disc-base:registerMarker', marker)
+                ESX.UI.Markers.Register(marker)
             else
-                TriggerEvent('disc-base:removeMarker', v.name .. '_drop')
                 drops[k] = nil
+                ESX.UI.Markers.Unregister(v.name .. '_drop')
             end
         end
     end

@@ -23,6 +23,7 @@ Citizen.CreateThread(function()
             end,
             msg = v.msg or _U('keystash'),
         }
-        TriggerEvent('disc-base:registerMarker', marker)
+
+        ESX.UI.Markers.Register(marker)
     end
 end)

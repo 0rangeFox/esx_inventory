@@ -1,4 +1,6 @@
 ESX = nil
+TriggerEvent('esx:getSharedObject', function(obj) ESX = obj  end)
+
 InvType = {
     ['unknown'] = { slots = 1, label = 'Unknown' },
 }
@@ -43,10 +45,6 @@ AddEventHandler('esx_inventory:RegisterInventory', function(inventory)
 
     InvType[inventory.name] = inventory
     loadedInventories[inventory.name] = {}
-end)
-
-TriggerEvent('esx:getSharedObject', function(obj)
-    ESX = obj
 end)
 
 ESX.RegisterServerCallback('esx_inventory:doesInvTypeExists', function(source, cb, type)

@@ -81,7 +81,4 @@ files {
     'html/ui.html'
 }
 
-dependencies {
-    'es_extended',
-    'disc-base'
-}
+dependency 'es_extended'

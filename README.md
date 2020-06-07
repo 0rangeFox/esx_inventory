@@ -1,6 +1,6 @@
 # esx_inventory | Only works with this [es_extended](https://github.com/0rangeFox/es_extended)
 
-### I will accept PR or do bug fixes, if you found one, [just report it on section "issues"](https://github.com/0rangeFox/es_extended/issues). You can [join on my support discord](https://discord.gg/5vrjddj) to get help.
+### I will accept PR or do bug fixes, if you found one, [just report it on section "issues"](https://github.com/0rangeFox/es_extended/issues). You can [join on my support discord](https://discord.gg/zysTbuU) to get help.
 
 # Description
 Adds the following features
@@ -30,15 +30,12 @@ Ammo for each weapon is stored in `ammos` with amount of bullets, Ammos are read
 The weapon wheel is disabled for the use of hot keys. Weapons being used as items is needed in this case
 
 # Installation
-[Download `disc-base`](https://github.com/DiscworldZA/gta-resources/tree/master/disc-base)
-
-Add the disc-base and esx_inventory to resource folder `[esx]/[inventory]`
+Add the esx_inventory to resource folder `[esx]/[inventory]`
 
 Execute SQL : `esx_inventory.sql`
 
 Add the following lines to your config:
 ```
-start disc-base
 start esx_inventory
 ```
 

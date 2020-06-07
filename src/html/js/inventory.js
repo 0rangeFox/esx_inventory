@@ -142,6 +142,7 @@ function secondInventorySetup(invOwner, items, invTier, money) {
         const slot = $('#inventoryTwo').find('.slot').filter(function () {
             return $(this).data('slot') === item.slot;
         });
+
         secondUsed++;
         const slotId = $(slot).data('slot');
         secondItems[slotId] = item;
@@ -157,6 +158,7 @@ function setupPlayerSlots() {
     $('#inventoryOne').removeData('invOwner');
     $('#inventoryOne').removeData('invTier');
     $('#player-max').html(firstTier.slots);
+
     for (i = 1; i <= (firstTier.slots); i++) {
         $("#inventoryOne").append($('.slot-template').clone());
         $('#inventoryOne').find('.slot-template').data('slot', i);
@@ -171,6 +173,7 @@ function setupSecondarySlots(owner) {
     $('#inventoryTwo').removeData('invOwner');
     $('#inventoryTwo').removeData('invTier');
     $('#other-max').html(secondTier.slots);
+
     for (i = 1; i <= (secondTier.slots); i++) {
         $("#inventoryTwo").append($('.slot-template').clone());
         $('#inventoryTwo').find('.slot-template').data('slot', i);
@@ -193,6 +196,7 @@ document.addEventListener('mousemove', function(event) {
     event.preventDefault();
     cursorX = event.clientX;
     cursorY = event.clientY;
+
     if (dragging)
         if (draggingItem !== undefined && draggingItem !== null) {
             draggingItem.css('left', (cursorX - offset[0]) + 'px');
@@ -220,7 +224,6 @@ $(document).ready(function() {
             const item = origDrag.find('.item').data('item');
 
             try {
-                console.log("inventory.js | #001 | ", JSON.stringify(item))
                 item.qty
             } catch (error) {
                 EndDragging();
@@ -307,6 +310,7 @@ $(document).ready(function() {
                     $("#give").addClass("disabled");
                 }
             }
+
             dragging = true;
         }
     });

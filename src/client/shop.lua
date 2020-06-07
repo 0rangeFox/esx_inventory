@@ -4,6 +4,10 @@ local shopSecondaryInventory = {
 }
 
 Citizen.CreateThread(function()
+    while not ESXLoaded do
+        Citizen.Wait(10)
+    end
+
     for k, v in pairs(Config.Shops) do
         if v.enableBlip then
             for val, coords in pairs(v.coords) do
@@ -13,7 +17,8 @@ Citizen.CreateThread(function()
                     colour = v.blipColour or 2,
                     sprite = v.blipSprite or 52
                 }
-                TriggerEvent('disc-base:registerBlip', blip)
+
+                ESX.UI.Blips.Register(blip)
             end
         end
     end
@@ -23,6 +28,7 @@ Citizen.CreateThread(function()
     while not ESXLoaded do
         Citizen.Wait(10)
     end
+
     for k, v in pairs(Config.Shops) do
         for val, coords in pairs(v.coords) do
             local marker = {
@@ -40,7 +46,8 @@ Citizen.CreateThread(function()
                 end,
                 msg = v.msg or _U('keyshop'),
             }
-            TriggerEvent('disc-base:registerMarker', marker)
+
+            ESX.UI.Markers.Register(marker)
         end
     end
 end)
