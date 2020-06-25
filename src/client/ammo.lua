@@ -1,13 +1,13 @@
 RegisterNetEvent('esx_inventory:useAmmoItem')
 AddEventHandler('esx_inventory:useAmmoItem', function(itemAmmo)
-    local playerPed, found, currentWeapon = GetPlayerPed(-1), GetCurrentPedWeapon(playerPed, true)
+    local playerPed = GetPlayerPed(-1)
+    local currentWeapon = GetSelectedPedWeapon(playerPed)
     local weapon
-
-    if found then
+    if currentWeapon ~= nil then
         for _, vWeapon in pairs(itemAmmo.weapons) do
             if currentWeapon == GetHashKey(vWeapon) then
                 weapon = vWeapon
-                break
+                break   
             end
         end
 
