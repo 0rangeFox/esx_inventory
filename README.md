@@ -43,10 +43,9 @@ start esx_inventory
 The source CSS is written in SASS, which is a superset of the CSS3 syntax. Compiling this will require some form of a SASS compiler to compile it into valid vanilla CSS that a browser (or in this case, NUI/CEF) can understand and parse. Can easily get a Visual Studio Code extension to achieve this, a good one to try is [Live SASS Compiler](https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass), once installed add the below to your VSCode config and it'll compile the SCSS files into CSS and put it in the correct location.
 
 ```JSON
-"liveSassCompile.settings.formats":[{
+"liveSassCompile.settings.formats": [{
         "format": "compressed",
         "extensionName": ".css",
         "savePath": "~/../"
-    },
-]
+}]
 ```

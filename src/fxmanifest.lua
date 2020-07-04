@@ -15,7 +15,7 @@ client_scripts {
     'client/main.lua',
     'client/actions.lua',
     'client/inventory.lua',
-    --'client/drop.lua',
+    'client/drop.lua',
     'client/trunk.lua',
     'client/glovebox.lua',
     'client/shop.lua',

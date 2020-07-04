@@ -12,6 +12,11 @@ Config.PlayerMaxWeight = 100 -- Peso máximo que o jogador pode suportar
 Config.StashMaxWeight = 650 -- Peso máximo que os armazéns podem suportar
 Config.GloveboxMaxWeight = 30 -- Peso máximo que os torpedos podem suportar
 
+Config.Drops = {
+    Markers = true,
+    Pickups = false -- [WIP] Better to stay false for avoid dupe bugs
+}
+
 Config.Ammo = {
     {
         name = 'AMMO_PISTOL',

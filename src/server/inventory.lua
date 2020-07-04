@@ -739,11 +739,15 @@ function loadInventory(identifier, type, cb)
     }, function(result)
         if #result == 0 then
             loadedInventories[type][identifier] = {}
-            cb({})
+
+            if cb then
+                cb({})
+            end
+
             return
         end
 
-        inventory = json.decode(result[1].data)
+        local inventory = json.decode(result[1].data)
         loadedInventories[type][identifier] = inventory
 
         if cb then
