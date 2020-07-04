@@ -70,6 +70,8 @@ AddEventHandler('esx_inventory:modifiedInventory', function(identifier, type, da
                     end
                 end
             end
+        else
+            TriggerEvent('esx_inventory:deletedInventory', identifier, type)
         end
     end
 end)

@@ -598,6 +598,8 @@ end, true, {help = _U('saveInventories')})
 
 function saveInventories()
     local totalSavedInventories = 0
+    local totalDeletedInventories = 0
+
     for type, inventories in pairs(loadedInventories) do
         for identifier, inventory in pairs(inventories) do
             if inventory ~= nil then
@@ -606,12 +608,13 @@ function saveInventories()
                     totalSavedInventories = totalSavedInventories + 1
                 else
                     deleteInventory(identifier, type)
+                    totalDeletedInventories = totalDeletedInventories + 1
                 end
             end
         end
     end
 
-    print(('[esx_inventory] [^2INFO^7] Saved %s inventory(ies)'):format(totalSavedInventories))
+    print(('[esx_inventory] [^2INFO^7] Saved %s inventory(ies) and deleted %s inventory(ies)'):format(totalSavedInventories, totalDeletedInventories))
 end
 
 function saveInventory(identifier, type)
