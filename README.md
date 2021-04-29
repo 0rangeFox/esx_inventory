@@ -1,6 +1,6 @@
 # esx_inventory | Only works with this [es_extended](https://github.com/0rangeFox/es_extended)
 
-### I will accept PR or do bug fixes, if you found one, [just report it on section "issues"](https://github.com/0rangeFox/es_extended/issues). You can [join on my support discord](https://discord.gg/zysTbuU) to get help.
+## Obsolete project, don't use it for production, it is advisable only for developers if they want to make improvements.
 
 # Description
 Adds the following features
